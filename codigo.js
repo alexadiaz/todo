@@ -11,7 +11,7 @@ var todos = null;
     marcar = document.getElementById("marcar");
 
     texto.onkeypress = function(oKeyEvent){
-        if(oKeyEvent.charCode === 13 || oKeyEvent.charCode === 65) 
+        if(oKeyEvent.charCode === 13) 
         {
             agregar(this);
         }
