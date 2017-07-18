@@ -100,6 +100,8 @@ var todos = null;
         }
     });
 
+    console.log("listos!!!");
+
 }
 
 function foco(r){
