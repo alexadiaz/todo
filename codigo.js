@@ -99,9 +99,6 @@ var todos = null;
             lis[i].style.display= "list-item";
         }
     });
-
-    console.log("listos!!!");
-
 }
 
 function foco(r){
