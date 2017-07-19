@@ -50,7 +50,7 @@ input,div {
     cursor: pointer;
 }
 
-.boton:focus, .eliminar:focus, .imagen, .imagen_marcada{
+.boton:focus, .eliminar:focus, .imagen, .imagen_marcada, .borrar-todo{
     outline: 0;
 }
 

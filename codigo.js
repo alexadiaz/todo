@@ -25,15 +25,19 @@ var todos = null;
         var div = ul.querySelectorAll("div");
         var input = ul.querySelectorAll("input.alinear");
         var borrar = document.getElementById("borrar-todo");
+        var mostrar = document.getElementById("contador");
         var debeMarcar = null;
 
         if(marcar.getAttribute("data-estado") === "ninguno"){
             debeMarcar = true;
             marcar.setAttribute("data-estado", "todos");
+            borrar.style.display="inline-block";
+            mostrar.innerText = "0"; 
         }    
         else {
             debeMarcar = false;
             marcar.setAttribute("data-estado", "ninguno");
+            borrar.style.display="none";
         }
 
        for (var i=0; i<lis.length;i++){
@@ -42,20 +46,14 @@ var todos = null;
                 lis[i].setAttribute("name","1");
                 div[i].style.textDecoration = "line-through";
                 input[i].className="alinear imagen_marcada";
-                var mostrar = document.getElementById("contador");
-                mostrar.innerText = "0";    
-                borrar.style.display="inline-block";
             }
             else {   
                 lis[i].setAttribute("name","");
                 div[i].style.textDecoration = "none";
                 input[i].className="alinear imagen";
                 contador(true);
-                borrar.style.display="none";
             }
-        
         }
-
     });
 
     rojos.addEventListener("click", function(){
@@ -154,7 +152,17 @@ function agregar(textoElement){
                 nuevoMarcarElement.className= "alinear imagen";
                 debeMarcar=true;
                 marcar.setAttribute("data-estado","ninguno");
-                borrar.style.display="none";
+                for (var i=0; i< lis.length;i++){
+                    if(lis[i].getAttribute("name")=== "1"){
+                        count =count +1;
+                    }
+                }
+                if (count!== 0){
+                    borrar.style.display="inline-block";
+                }
+                else{
+                    borrar.style.display="none";
+                }
                 contador(true);
             }
         });
@@ -224,19 +232,23 @@ function contador (operador){
     var mostrar = document.getElementById("contador");
     var numero = Number(mostrar.innerText);
     var letra = document.getElementById("letra");
+    var marcar = document.getElementById("marcar");
+    var borrar =document.getElementById("borrar-todo");
 
     if (operador === true){
         mostrar.innerText=numero+1;
         letra.style.display="block";
-        
+        marcar.setAttribute("data-estado", "ninguno");
     }
     else{
         mostrar.innerText=numero-1;
         var ul= document.getElementById("lista");
         if(ul.children.length === 0){
             letra.style.display="none";
-            marcar = document.getElementById("marcar");
             marcar.setAttribute("data-estado", "ninguno");
+        }
+        if (mostrar.innerText==="0"){
+            marcar.setAttribute("data-estado","todos");
         }
     }
 }
