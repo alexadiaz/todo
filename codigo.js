@@ -1,10 +1,11 @@
 var negros = null;
 var rojos = null;
 var todos = null; 
- 
+
  function init() {
     
     var texto = document.getElementById("texto");
+    var borrar_todo= document.getElementById("borrar-todo");
     negros = document.getElementById("negros");
     rojos =  document.getElementById("rojos");
     todos = document.getElementById("todos"); 
@@ -16,9 +17,9 @@ var todos = null;
             agregar(this);
         }
     };
- 
 
-   marcar.addEventListener("click",function(){
+
+    marcar.addEventListener("click",function(){
 
         var ul= document.getElementById("lista");
         var lis = ul.children;
@@ -40,7 +41,7 @@ var todos = null;
             borrar.style.display="none";
         }
 
-       for (var i=0; i<lis.length;i++){
+    for (var i=0; i<lis.length;i++){
             
             if(debeMarcar === true) {
                 lis[i].setAttribute("name","1");
@@ -56,9 +57,20 @@ var todos = null;
         }
     });
 
+    borrar_todo.addEventListener("click",function(){
+        var ul = document.getElementById("lista");
+        var lis =ul.children;
+
+        for (var i = lis.length - 1; i >= 0; i--){
+            if (lis[i].getAttribute("name")==="1"){
+                ul.removeChild(lis[i]);
+            }
+    }
+    });
+
     rojos.addEventListener("click", function(){
         foco(this);
-       
+    
         var ul = document.querySelector("#lista");
         var lis = ul.querySelectorAll("li");
         
@@ -181,7 +193,7 @@ function agregar(textoElement){
         nuevoInputElement.addEventListener("click",function(){
             var li =this.parentNode;
             var ul = li.parentNode;
-           
+        
             if (nuevoDivElement.style.textDecoration !== "line-through"){
                 contador(false);
             }
@@ -196,7 +208,7 @@ function agregar(textoElement){
         });
 
 
-       function mostrar_ocultar (li,is_mostrar){
+    function mostrar_ocultar (li,is_mostrar){
             var display = is_mostrar===true ? "inline-block" : "none";
             var el = li.querySelector(".eliminar")
             el.style.display = display;
@@ -205,7 +217,7 @@ function agregar(textoElement){
 
         var nuevoLiElement = document.createElement("li");
         nuevoLiElement.addEventListener("mouseover", function(){
-           mostrar_ocultar (this,true);
+        mostrar_ocultar (this,true);
         });
 
         nuevoLiElement.addEventListener("mouseleave", function(){
@@ -222,7 +234,7 @@ function agregar(textoElement){
         ulElement.appendChild(nuevoLiElement);
         
         contador(true);
-      
+    
         textoElement.value="";
     }    
 }
