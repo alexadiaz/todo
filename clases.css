@@ -10,7 +10,24 @@ text-align: center;
 margin-bottom: 0;
 }
 
-.colores {
+div, input {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 200px;
+}
+
+ul{
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+li {
+     padding: 16px 80px 16px 22px;
+     position: relative;
+}
+
+.color_titulo {
     color:rgba(175, 47, 47, 0.15);
 }
 
@@ -20,31 +37,18 @@ margin-bottom: 0;
     background-color: white;
 }
 
-input,div {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 24px;
-    font-weight: 200;
+.linea_renglon{
+    border-bottom-color: gray;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
 }
 
-.letra > input, .letra span {
-    font-size: 12px;
-}
-
-.linea > div{
-    padding-left: 20px;
-}
-
-.letra{
-    display: none;
-    padding: 5px 26px 5px 26px;
-}
-
-.botones, .boton , .borrar-todo{
-    border: 1px solid white;
+.botones {
+    border: 1px solid transparent;
     background-color: transparent;
     border-radius: 5px;
     outline-color: transparent;
-    outline-width: 0px;
+    outline-width: 0;
 }
 
 .botones:hover {
@@ -52,80 +56,84 @@ input,div {
     cursor: pointer;
 }
 
-.boton:focus, .eliminar:focus, .imagen, .imagen_marcada, .borrar-todo{
-    outline: 0;
-}
-
-.alinear{
-    display: inline-block;
-}
-
-.foco, .botones.foco:hover {
+.botones.foco:hover,
+.foco{
     border: 1px solid blue;
    
 }
 
-.linea{
-    border-bottom-color: gray;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
+.boton_marcar{
+    color: #e6e6e6;
+    padding: 16px 10px 16px 27px;
 }
 
-.texto{
+.ingresar_datos{
     padding: 16px 16px 16px 10px;
     font-style: italic;
     width: 89%;
 }
 
-.marcar{
-    font-size: 24px;
-    color: #e6e6e6;
-    padding: 16px 10px 16px 27px;
+.boton_marcar:hover,
+.ingresar_datos:hover{
+    border: 1px solid transparent;
 }
 
-ul{
-    list-style-type: none;
-    padding-left: 0;
-    margin: 0;
+.barra_inferior{
+    display: none;
+    padding: 5px 26px 5px 26px;
 }
 
-.imagen{
+.texto_barra_inferior{
+    font-size: 12px;
+}
+
+.margen_botones{
+    margin-left: 25%;
+}
+
+.boton_borrar_todo{
+    margin-left: 15%;
+    display: none;
+}
+
+.boton_borrar_todo:hover{
+    text-decoration: underline;
+    border:0;
+}
+
+
+.js_checkbox{
     content: url("http://www.clker.com/cliparts/x/b/r/I/i/K/radiobutton-unchecked-th.png");
     width: 23px;
     -webkit-appearance: none;
     margin:0;
+    outline-width: 0;
 }  
 
-.imagen_marcada{
+.js_checkbox_marcado{
     content: url("http://www.clker.com/cliparts/M/2/V/6/F/u/radiobutton-checked-sm-th.png");
     width: 23px;
     -webkit-appearance: none;
     margin:0;
+    outline-width: 0;
 }
 
-.eliminar{
-    background-color: transparent;
-    border: none;
+.js_margen_items{
+    padding-left: 20px;
+}
+
+.js_boton_eliminar{
     font-size: 24px;
     position: absolute;
     right: 5%;
     color: red;
 }
 
-.eliminar:hover{
+.js_boton_eliminar:hover{
     color: blue;
-}
+    border:0;
+}    
 
-li {
-     padding: 16px 80px 16px 22px;
-     position: relative;
-}
-
-.borrar-todo{
-    margin-left: 15%;
-    display: none;
-}
-
-.borrar-todo:hover{
-    text-decoration: underline;
+.js_alinear_items{
+    display: inline-block;
 }

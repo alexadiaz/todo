@@ -8,22 +8,22 @@
 </head>
 
 <body>
-    <h1 class="colores">My Todo</h1>
+    <h1 class="color_titulo">My Todo</h1>
     <div class="container">
-        <div class="linea">
-            <input id="marcar" class = "boton marcar" type="button" value=">" data-estado="ninguno">
-            <input id="texto" class="boton texto" type="text" placeholder="ingrese datos" autofocus>
+        <div class="linea_renglon">
+            <input id="marcar" class = "botones boton_marcar" type="button" value=">" data-estado="ninguno">
+            <input id="texto" class="botones ingresar_datos" type="text" placeholder="ingrese datos" autofocus>
         </div>
         <div>
             <ul id="lista"></ul>
         </div>
-        <div id="letra" class="letra">
-            <span id="contador"></span>
-            <span style="margin-right: 25%">items left</span>
-            <input id="todos" class="botones foco" type="button" value="All">
-            <input id="rojos" class="botones" type="button" value="Completed" >
-            <input id="negros" class="botones" type="button" value="Active" >
-            <input id="borrar-todo" class="borrar-todo" type="button" value="Clear completed">
+        <div id="letra" class="barra_inferior">
+            <span id="contador" class="texto_barra_inferior"></span>
+            <span class="texto_barra_inferior">items left</span>
+            <input id="todos" class="botones texto_barra_inferior margen_botones foco" type="button" value="All">
+            <input id="rojos" class="botones texto_barra_inferior" type="button" value="Completed" >
+            <input id="negros" class="botones texto_barra_inferior" type="button" value="Active" >
+            <input id="borrar-todo" class="botones texto_barra_inferior boton_borrar_todo" type="button" value="Clear completed">
         </div>
     </div>
    
