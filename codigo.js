@@ -2,7 +2,7 @@ var negros = null;
 var rojos = null;
 var todos = null; 
 
- function init() {
+function init() {
     
     var texto = document.getElementById("texto");
     var borrar_todo= document.getElementById("borrar-todo");
@@ -12,8 +12,7 @@ var todos = null;
     marcar = document.getElementById("marcar");
 
     texto.onkeypress = function(oKeyEvent){
-        if(oKeyEvent.charCode === 13) 
-        {
+        if(oKeyEvent.charCode === 13){
             agregar(this);
         }
     };
@@ -114,7 +113,7 @@ var todos = null;
 function foco(r){
     var all= document.getElementById("todos");
     var rojos = document.getElementById("rojos");
-    var negros = document.getElementById("negros")
+    var negros = document.getElementById("negros");
 
     all.className="botones";
     rojos.className="botones";
@@ -217,7 +216,7 @@ function agregar(textoElement){
 
         var nuevoLiElement = document.createElement("li");
         nuevoLiElement.addEventListener("mouseover", function(){
-        mostrar_ocultar (this,true);
+            mostrar_ocultar (this,true);
         });
 
         nuevoLiElement.addEventListener("mouseleave", function(){
