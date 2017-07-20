@@ -40,12 +40,14 @@ input,div {
 }
 
 .botones, .boton , .borrar-todo{
-    border: 0;
+    border: 1px solid white;
     background-color: transparent;
     border-radius: 5px;
+    outline-color: transparent;
+    outline-width: 0px;
 }
 
-.botones:hover:not(:focus) {
+.botones:hover {
     border: 1px solid #ff8080;
     cursor: pointer;
 }
@@ -58,10 +60,9 @@ input,div {
     display: inline-block;
 }
 
-.foco {
+.foco, .botones.foco:hover {
     border: 1px solid blue;
-    outline-color: transparent;
-    outline-width: 0px;
+   
 }
 
 .linea{
