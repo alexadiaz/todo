@@ -1,4 +1,108 @@
-(function(){
+//(function(){
+
+    // -------- Data Manipulation
+
+    var model = {
+        taskList: [ ],
+        viewType: ""
+    };
+
+    function d_startup() {
+        model.viewType = "ALL";
+    }
+
+    function d_addTask(taskName){
+        var newTask = { 
+            text: taskName, 
+            isDone: false 
+        }; 
+        model.taskList.push( newTask );
+    }
+
+    function d_getList(){
+        var list = [];
+        for(var element of model.taskList){
+            list.push(element);
+        }
+        return list;
+    }
+
+    // ----------============
+
+    
+    
+    
+    // --------- HTML Manipulation
+
+    function h_onEnterInElement(element, fn){
+        element.onkeypress = function(oKeyEvent){
+            if(oKeyEvent.key === "Enter"){
+                fn(oKeyEvent.target.value);
+            }
+        };
+    }
+
+    function h_clearText(element){
+        element.value = "";
+    }
+
+    function h_onInit(fn){
+        document.addEventListener("DOMContentLoaded", fn);
+    }
+
+    function h_getById(id){
+        return document.getElementById(id);
+    };
+
+    function h_deleteChildren(element){
+        var list = element.children;
+        for (var i = list.length - 1; i >= 0; i--){
+            element.removeChild(list[i]);
+        }
+    }
+
+    function h_addChildrenToList(element, list){
+        for(var child of list){
+            var newElement = document.createElement("li");
+            newElement.innerText = child.text;
+            element.appendChild(newElement);
+        }
+    }
+
+
+    // ----------============
+
+
+
+    // -------------- App TODO
+
+    h_onInit(function(){
+
+        // elements
+        var newTaskElement = h_getById("texto");
+        var listElement = h_getById("lista");
+
+        
+        // setup data
+        d_startup();
+
+
+        // wiring (encajarlas)
+        h_onEnterInElement(newTaskElement, function(taskName){
+            
+            d_addTask(taskName);
+            h_clearText(newTaskElement);
+            
+            h_deleteChildren(listElement);
+            h_addChildrenToList(listElement, d_getList());
+
+        });
+
+
+    });
+
+
+    // ----------============
 
     var negros = null;
     var rojos = null;
@@ -266,6 +370,6 @@
         }
     }
 
-    document.addEventListener("DOMContentLoaded", init);
+    //document.addEventListener("DOMContentLoaded", init);
 
-}());
+//}());
