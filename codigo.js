@@ -85,6 +85,7 @@
         // elements
         var newTaskElement = h_getById("texto");
         var listElement = h_getById("lista");
+        var bottomBarElement = h_getById("letra");
 
         
         // setup data
@@ -99,6 +100,8 @@
             
             h_deleteChildren(listElement);
             h_addChildrenToList(listElement, d_getList());
+
+            h_showElement(bottomBarElement);
 
         });
 
