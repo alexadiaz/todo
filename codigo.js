@@ -69,6 +69,10 @@
         }
     }
 
+    function h_showElement(element){
+        element.style.display = "inline-block";
+    }
+
 
     // ----------============
 
