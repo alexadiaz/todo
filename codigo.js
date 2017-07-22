@@ -4,11 +4,9 @@
 
     var model = {
         taskList: [ ],
-        viewType: ""
     };
 
     function d_startup() {
-        model.viewType = "ALL";
     }
 
     function d_addTask(taskName){
@@ -19,7 +17,7 @@
         model.taskList.push( newTask );
     }
 
-    function d_getList(){
+    function d_getAllTasks(){
         var list = [];
         for(var element of model.taskList){
             list.push(element);
@@ -71,11 +69,9 @@
         }
     }
 
-    function h_addChildrenToList(element, list){
-        for(var child of list){
-            var newElement = document.createElement("li");
-            newElement.innerText = child.text;
-            element.appendChild(newElement);
+    function h_addChildrenToItem(element, children){
+        for(var child of children){
+            element.appendChild(child);
         }
     }
 
@@ -85,6 +81,16 @@
 
     function h_setText(element, text){
         element.innerText = text;
+    }
+
+    function h_createElement(tag, attributes){
+        var newElement = document.createElement(tag);
+        
+        for(var key in attributes){
+            newElement[key] = attributes[key];
+        }
+
+        return newElement;
     }
 
 
@@ -98,7 +104,7 @@
 
         // elements
         var newTaskElement = h_getById("texto");
-        var listElement = h_getById("lista");
+        var ulElement = h_getById("lista");
         var bottomBarElement = h_getById("letra");
         var counterElement = h_getById("contador");
         
@@ -112,14 +118,33 @@
             d_addTask(taskName);
             h_clearText(newTaskElement);
             
-            h_deleteChildren(listElement);
-            h_addChildrenToList(listElement, d_getList());
+            h_deleteChildren(ulElement);
+
+            var allTasks = d_getAllTasks();
+            var listOfLIs = buildListItems(allTasks);
+            h_addChildrenToItem(ulElement, listOfLIs);
 
             h_showElement(bottomBarElement);
 
             h_setText(counterElement, d_getNumberPendingTasks());
 
         });
+
+        function buildListItems(allTasks){
+            
+            var allLIs = [];
+            
+            for(var task of allTasks){
+                var attributes = {
+                    className: 'linea_renglon', 
+                    innerText: task.text
+                };
+                var li = h_createElement('li', attributes);
+                allLIs.push(li);
+            }
+
+            return allLIs;
+        }
 
 
     });
