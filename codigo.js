@@ -27,6 +27,16 @@
         return list;
     }
 
+    function d_getNumberPendingTasks(){
+        var total = 0;
+        for(var item of model.taskList){
+            if(item.isDone === false){
+                total++;
+            }
+        }
+        return total;
+    }
+
     // ----------============
 
     
@@ -73,6 +83,10 @@
         element.style.display = "inline-block";
     }
 
+    function h_setText(element, text){
+        element.innerText = text;
+    }
+
 
     // ----------============
 
@@ -86,7 +100,7 @@
         var newTaskElement = h_getById("texto");
         var listElement = h_getById("lista");
         var bottomBarElement = h_getById("letra");
-
+        var counterElement = h_getById("contador");
         
         // setup data
         d_startup();
@@ -102,6 +116,8 @@
             h_addChildrenToList(listElement, d_getList());
 
             h_showElement(bottomBarElement);
+
+            h_setText(counterElement, d_getNumberPendingTasks());
 
         });
 
