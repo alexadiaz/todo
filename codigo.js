@@ -13,12 +13,13 @@
         todos = document.getElementById("todos"); 
         marcar = document.getElementById("marcar");
 
+        consultar_tareas_guardadas();
+        
         texto.onkeypress = function(oKeyEvent){
             if(oKeyEvent.charCode === 13){
                 agregar(this);
             }
         };
-
 
         marcar.addEventListener("click",function(){
 
@@ -263,6 +264,66 @@
             if (mostrar.innerText==="0"){
                 marcar.setAttribute("data-estado","todos");
             }
+        }
+    }
+    
+    function consultar_tareas_guardadas(){
+        fetch("http://localhost:3000/consultar")
+	    .then(response => response.json())
+        .then(tareas => {
+            mostrar_tareas_pantalla(tareas);
+        });
+    }
+
+    function mostrar_tareas_pantalla(tareas){
+        var lista = id_elemento("lista");
+        for (let i in tareas){
+            let nombre_tarea = tareas[i].nombre;
+            
+            let renglon = crear_elemento("li");
+            let checkbox = crear_elemento("input");
+            let tarea = crear_elemento("div");
+            let eliminar = crear_elemento("input");
+            
+            asignar_propiedades_elemento(renglon,"renglon");
+            asignar_propiedades_elemento(checkbox,"checkbox");
+            asignar_propiedades_elemento(tarea,"tarea",nombre_tarea);
+            asignar_propiedades_elemento(eliminar,"eliminar");
+
+            lista.appendChild(renglon);
+            renglon.appendChild(checkbox);
+            renglon.appendChild(tarea);
+            renglon.appendChild(eliminar);
+        }
+    }
+
+    function id_elemento(id){
+        return document.getElementById(id);
+    }
+
+    function crear_elemento(elemento){
+        return document.createElement(elemento);
+    }
+   
+    function asignar_propiedades_elemento(elemento,accion,nombre_tarea){
+        switch(accion){
+            case "renglon":
+                elemento.className = "linea_renglon";
+            break;
+            case "checkbox":
+                elemento.className = "js_alinear_items js_checkbox";
+                elemento.type = "checkbox";
+            break;
+            case "tarea":
+                elemento.className = "js_alinear_items js_margen_items";
+                elemento.innerText = nombre_tarea;
+            break;
+            case "eliminar":
+                elemento.className = "botones js_boton_eliminar";
+                elemento.type = "button";
+                elemento.value = "x";
+                elemento.style.display = "none";
+            break;
         }
     }
 
