@@ -17,7 +17,7 @@
         
         texto.onkeypress = function(oKeyEvent){
             if(oKeyEvent.charCode === 13){
-                agregar(this);
+                insertar_tarea(this);
             }
         };
 
@@ -290,6 +290,8 @@
             asignar_propiedades_elemento(tarea,"tarea",nombre_tarea);
             asignar_propiedades_elemento(eliminar,"eliminar");
 
+            asignar_eventos_renglon(renglon);
+            
             lista.appendChild(renglon);
             renglon.appendChild(checkbox);
             renglon.appendChild(tarea);
@@ -324,6 +326,24 @@
                 elemento.value = "x";
                 elemento.style.display = "none";
             break;
+        }
+    }
+
+    function asignar_eventos_renglon(renglon){
+        renglon.addEventListener("mouseover", () => mostrar_ocultar(renglon,true));
+        renglon.addEventListener("mouseleave", () => mostrar_ocultar(renglon,false));
+    }
+
+    function mostrar_ocultar (renglon,is_mostrar){
+        let display = is_mostrar === true ? "inline-block" : "none";
+        let eliminar = renglon.querySelector(".js_boton_eliminar")
+        eliminar.style.display = display;
+    }
+
+    function insertar_tarea(input_texto){
+        let tareas = [{nombre: input_texto.value}];
+        if (tareas[0].nombre !== ""){
+            mostrar_tareas_pantalla(tareas);
         }
     }
 
