@@ -144,63 +144,6 @@
                     marcar.setAttribute("data-estado", "ninguno");
                 }
             });
-
-
-        function mostrar_ocultar (li,is_mostrar){
-                var display = is_mostrar===true ? "inline-block" : "none";
-                var el = li.querySelector(".js_boton_eliminar")
-                el.style.display = display;
-            }
-
-
-            var nuevoLiElement = document.createElement("li");
-            nuevoLiElement.addEventListener("mouseover", function(){
-                mostrar_ocultar (this,true);
-            });
-
-            nuevoLiElement.addEventListener("mouseleave", function(){
-                mostrar_ocultar (this,false);
-            });
-
-            nuevoLiElement.appendChild(nuevoMarcarElement);
-            nuevoLiElement.appendChild(nuevoDivElement);
-            nuevoLiElement.appendChild(nuevoInputElement);
-            
-            nuevoLiElement.className="linea_renglon";
-
-            var ulElement = document.getElementById("lista");
-            ulElement.appendChild(nuevoLiElement);
-            
-            contador(true);
-        
-            textoElement.value="";
-        }    
-    }
-
-    function contador (operador){
-        
-        var mostrar = document.getElementById("contador");
-        var numero = Number(mostrar.innerText);
-        var letra = document.getElementById("letra");
-        var marcar = document.getElementById("marcar");
-        var borrar =document.getElementById("borrar-todo");
-
-        if (operador === true){
-            mostrar.innerText=numero+1;
-            letra.style.display="block";
-            marcar.setAttribute("data-estado", "ninguno");
-        }
-        else{
-            mostrar.innerText=numero-1;
-            var ul= document.getElementById("lista");
-            if(ul.children.length === 0){
-                letra.style.display="none";
-                marcar.setAttribute("data-estado", "ninguno");
-            }
-            if (mostrar.innerText==="0"){
-                marcar.setAttribute("data-estado","todos");
-            }
-        }
     }
     
     function consultar_tareas_guardadas(){
