@@ -9,11 +9,12 @@
     let marcar = null;
     let letra = null;
     let mostrar = null;
+    let borrar_todo = null;
     
     function init() {
         
         var texto = document.getElementById("texto");
-        var borrar_todo= document.getElementById("borrar-todo");
+        //var borrar_todo= document.getElementById("borrar-todo");
         negros = document.getElementById("negros");
         rojos =  document.getElementById("rojos");
         todos = document.getElementById("todos"); 
@@ -23,6 +24,7 @@
         marcar = id_elemento("marcar");
         letra = id_elemento("letra");
         mostrar = id_elemento("contador");
+        borrar_todo = id_elemento("borrar-todo");
         
         consultar_tareas_guardadas();
         
@@ -174,13 +176,13 @@
             let tarea = crear_elemento("div");
             let eliminar = crear_elemento("input");
             
-            asignar_propiedades_elemento(renglon,"renglon");
-            asignar_propiedades_elemento(checkbox,"checkbox");
-            asignar_propiedades_elemento(tarea,"tarea",nombre_tarea);
-            asignar_propiedades_elemento(eliminar,"eliminar");
+            asignar_propiedades("pantalla","renglon",renglon);
+            asignar_propiedades("pantalla","checkbox",checkbox);
+            asignar_propiedades("pantalla","tarea",tarea,nombre_tarea);
+            asignar_propiedades("pantalla","eliminar",eliminar);
 
             asignar_eventos_renglon(renglon);
-            asignar_eventos_checkbox(checkbox);
+            asignar_eventos_checkbox(checkbox,tarea,renglon);
             
             lista.appendChild(renglon);
             renglon.appendChild(checkbox);
@@ -197,8 +199,20 @@
     function crear_elemento(elemento){
         return document.createElement(elemento);
     }
-   
-    function asignar_propiedades_elemento(elemento,accion,valor){
+
+    function asignar_propiedades(funcion,accion,elemento,valor){
+        if (funcion === "pantalla"){
+            propiedades_elementos_pantalla(accion,elemento,valor);
+        }
+        else if (funcion === "checkbox"){
+            propiedades_elementos_checkbox(accion,elemento,valor);
+        }
+        else if (funcion === "contador"){
+            propiedades_elementos_contador(accion);
+        }
+    }
+
+    function propiedades_elementos_pantalla(accion,elemento,valor){
         switch(accion){
             case "renglon":
                 elemento.className = "linea_renglon";
@@ -217,11 +231,33 @@
                 elemento.value = "x";
                 elemento.style.display = "none";
             break;
+        }
+    }
+
+    function propiedades_elementos_checkbox(accion,elemento,valor){
+        switch(accion){
+            case "renglon":
+                elemento.setAttribute("data-name",valor);
+            break;
+            case "checkbox":
+                elemento.className = "js_alinear_items js_checkbox_marcado";
+            break;
+            case "tarea":
+                elemento.style.textDecoration = "line-through";
+            break;
+            case "borrar_todo":
+                borrar_todo.style.display = "inline-block";
+            break;
+        }
+    }
+   
+    function propiedades_elementos_contador(accion){
+            switch(accion){
             case "letra":
-                elemento.style.display = valor;
+                letra.style.display = "block";
             break;
             case "marcar":
-                elemento.setAttribute("data-estado",valor);
+                marcar.setAttribute("data-estado","ninguno");
             break;
         }
     }
@@ -231,20 +267,17 @@
         renglon.addEventListener("mouseleave", () => mostrar_ocultar(renglon,false));
     }
 
-    function asignar_eventos_checkbox(checkbox){
+    function asignar_eventos_checkbox(checkbox,tarea,renglon){
         checkbox.addEventListener("click",() => {
-        
-            var ul= document.getElementById("lista");
-            var borrar = document.getElementById("borrar-todo");
-            var lis = ul.children;
-            var debeMarcar = null;
-            var count =0;
-
-            if (nuevoDivElement.style.textDecoration != "line-through"){
-                nuevoDivElement.style.textDecoration = "line-through"
-                nuevoLiElement.setAttribute("name", "1");
-                nuevoMarcarElement.className= "js_alinear_items js_checkbox_marcado";
-                borrar.style.display="inline-block";
+            let renglones = lista.children;
+            let debeMarcar = null;
+            let count =0;
+            if (tarea.style.textDecoration != "line-through"){
+                asignar_propiedades("checkbox","renglon",renglon,"1");
+                asignar_propiedades("checkbox","checkbox",checkbox);
+                asignar_propiedades("checkbox","tarea",tarea);
+                asignar_propiedades("checkbox","borrar_todo");
+            
 
                 for (var i=0; i< lis.length;i++){
                     if(lis[i].getAttribute("name")=== "1"){
@@ -289,8 +322,8 @@
         let numero = parseInt(mostrar.innerText);
         if (operador){
             mostrar.innerText = numero + numero_tareas;
-            asignar_propiedades_elemento(letra,"letra","block");
-            asignar_propiedades_elemento(marcar,"marcar","ninguno");
+            asignar_propiedades("contador","letra");
+            asignar_propiedades("contador","marcar");
         }
         /*else{
             mostrar.innerText = numero - 1;
