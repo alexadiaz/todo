@@ -1,9 +1,15 @@
-(function(){
 
+(function(){
+    "use strict";
     var negros = null;
     var rojos = null;
     var todos = null; 
 
+    let lista = null;
+    let marcar = null;
+    let letra = null;
+    let mostrar = null;
+    
     function init() {
         
         var texto = document.getElementById("texto");
@@ -11,8 +17,13 @@
         negros = document.getElementById("negros");
         rojos =  document.getElementById("rojos");
         todos = document.getElementById("todos"); 
-        marcar = document.getElementById("marcar");
+        //marcar = document.getElementById("marcar");
 
+        lista = id_elemento("lista");
+        marcar = id_elemento("marcar");
+        letra = id_elemento("letra");
+        mostrar = id_elemento("contador");
+        
         consultar_tareas_guardadas();
         
         texto.onkeypress = function(oKeyEvent){
@@ -126,26 +137,26 @@
     }
 
     function agregar(textoElement){
-        
+             
         //boton eliminar
-            nuevoInputElement.addEventListener("click",function(){
-                var li =this.parentNode;
-                var ul = li.parentNode;
+        nuevoInputElement.addEventListener("click",function(){
+            var li =this.parentNode;
+            var ul = li.parentNode;
+        
+            if (nuevoDivElement.style.textDecoration !== "line-through"){
+                contador(false);
+            }
             
-                if (nuevoDivElement.style.textDecoration !== "line-through"){
-                    contador(false);
-                }
-                
-                ul.removeChild(li);
-                
-                if(ul.children.length === 0){
-                    letra.style.display="none";
-                    marcar = document.getElementById("marcar");
-                    marcar.setAttribute("data-estado", "ninguno");
-                }
-            });
+            ul.removeChild(li);
+            
+            if(ul.children.length === 0){
+                letra.style.display="none";
+                marcar = document.getElementById("marcar");
+                marcar.setAttribute("data-estado", "ninguno");
+            }
+        });
     }
-    
+
     function consultar_tareas_guardadas(){
         fetch("http://localhost:3000/consultar")
 	    .then(response => response.json())
@@ -155,7 +166,6 @@
     }
 
     function mostrar_tareas_pantalla(tareas){
-        var lista = id_elemento("lista");
         for (let i in tareas){
             let nombre_tarea = tareas[i].nombre;
             
@@ -170,12 +180,14 @@
             asignar_propiedades_elemento(eliminar,"eliminar");
 
             asignar_eventos_renglon(renglon);
+            asignar_eventos_checkbox(checkbox);
             
             lista.appendChild(renglon);
             renglon.appendChild(checkbox);
             renglon.appendChild(tarea);
             renglon.appendChild(eliminar);
         }
+        contador(true,tareas.length);
     }
 
     function id_elemento(id){
