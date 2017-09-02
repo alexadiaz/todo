@@ -186,7 +186,7 @@
         return document.createElement(elemento);
     }
    
-    function asignar_propiedades_elemento(elemento,accion,nombre_tarea){
+    function asignar_propiedades_elemento(elemento,accion,valor){
         switch(accion){
             case "renglon":
                 elemento.className = "linea_renglon";
@@ -197,13 +197,19 @@
             break;
             case "tarea":
                 elemento.className = "js_alinear_items js_margen_items";
-                elemento.innerText = nombre_tarea;
+                elemento.innerText = valor;
             break;
             case "eliminar":
                 elemento.className = "botones js_boton_eliminar";
                 elemento.type = "button";
                 elemento.value = "x";
                 elemento.style.display = "none";
+            break;
+            case "letra":
+                elemento.style.display = valor;
+            break;
+            case "marcar":
+                elemento.setAttribute("data-estado",valor);
             break;
         }
     }
