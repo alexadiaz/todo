@@ -127,71 +127,7 @@
 
     function agregar(textoElement){
         
-        var text ="";
-        text =textoElement.value;
-
-        if (text  != "") {
-
-            var nuevoMarcarElement= document.createElement("input");
-            nuevoMarcarElement.type="checkbox";
-            nuevoMarcarElement.className="js_alinear_items js_checkbox"
-            nuevoMarcarElement.addEventListener("click",function(){
-                
-                var ul= document.getElementById("lista");
-                var borrar = document.getElementById("borrar-todo");
-                var lis = ul.children;
-                var debeMarcar = null;
-                var count =0;
-
-                if (nuevoDivElement.style.textDecoration != "line-through"){
-                    nuevoDivElement.style.textDecoration = "line-through"
-                    nuevoLiElement.setAttribute("name", "1");
-                    nuevoMarcarElement.className= "js_alinear_items js_checkbox_marcado";
-                    borrar.style.display="inline-block";
-
-                    for (var i=0; i< lis.length;i++){
-                        if(lis[i].getAttribute("name")=== "1"){
-                            count =count +1;
-                        }
-                    }
-                    if (count=== lis.length){
-                        debeMarcar=false;
-                        marcar.setAttribute("data-estado","todos");
-                    }
-                    contador(false);
-                }
-                else{
-                    nuevoDivElement.style.textDecoration= "none";
-                    nuevoLiElement.setAttribute("name","0");
-                    nuevoMarcarElement.className= "js_alinear_items js_checkbox";
-                    debeMarcar=true;
-                    marcar.setAttribute("data-estado","ninguno");
-                    for (var i=0; i< lis.length;i++){
-                        if(lis[i].getAttribute("name")=== "1"){
-                            count =count +1;
-                        }
-                    }
-                    if (count!== 0){
-                        borrar.style.display="inline-block";
-                    }
-                    else{
-                        borrar.style.display="none";
-                    }
-                    contador(true);
-                }
-            });
-
-
-            var nuevoDivElement= document.createElement("div");
-            nuevoDivElement.innerText= text ;
-            nuevoDivElement.className="js_alinear_items js_margen_items";
-
-
-            var nuevoInputElement= document.createElement("input");
-            nuevoInputElement.type="button";
-            nuevoInputElement.value="x";
-            nuevoInputElement.className="botones js_boton_eliminar";
-            nuevoInputElement.style.display = "none";
+        //boton eliminar
             nuevoInputElement.addEventListener("click",function(){
                 var li =this.parentNode;
                 var ul = li.parentNode;
