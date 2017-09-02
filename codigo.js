@@ -213,10 +213,77 @@
         renglon.addEventListener("mouseleave", () => mostrar_ocultar(renglon,false));
     }
 
+    function asignar_eventos_checkbox(checkbox){
+        checkbox.addEventListener("click",() => {
+        
+            var ul= document.getElementById("lista");
+            var borrar = document.getElementById("borrar-todo");
+            var lis = ul.children;
+            var debeMarcar = null;
+            var count =0;
+
+            if (nuevoDivElement.style.textDecoration != "line-through"){
+                nuevoDivElement.style.textDecoration = "line-through"
+                nuevoLiElement.setAttribute("name", "1");
+                nuevoMarcarElement.className= "js_alinear_items js_checkbox_marcado";
+                borrar.style.display="inline-block";
+
+                for (var i=0; i< lis.length;i++){
+                    if(lis[i].getAttribute("name")=== "1"){
+                        count =count +1;
+                    }
+                }
+                if (count=== lis.length){
+                    debeMarcar=false;
+                    marcar.setAttribute("data-estado","todos");
+                }
+                contador(false);
+            }
+            else{
+                nuevoDivElement.style.textDecoration= "none";
+                nuevoLiElement.setAttribute("name","0");
+                nuevoMarcarElement.className= "js_alinear_items js_checkbox";
+                debeMarcar=true;
+                marcar.setAttribute("data-estado","ninguno");
+                for (var i=0; i< lis.length;i++){
+                    if(lis[i].getAttribute("name")=== "1"){
+                        count =count +1;
+                    }
+                }
+                if (count!== 0){
+                    borrar.style.display="inline-block";
+                }
+                else{
+                    borrar.style.display="none";
+                }
+                contador(true);
+            }
+        });
+    }
+
     function mostrar_ocultar (renglon,is_mostrar){
         let display = is_mostrar === true ? "inline-block" : "none";
         let eliminar = renglon.querySelector(".js_boton_eliminar")
         eliminar.style.display = display;
+    }
+
+    function contador (operador,numero_tareas){
+        let numero = parseInt(mostrar.innerText);
+        if (operador){
+            mostrar.innerText = numero + numero_tareas;
+            asignar_propiedades_elemento(letra,"letra","block");
+            asignar_propiedades_elemento(marcar,"marcar","ninguno");
+        }
+        /*else{
+            mostrar.innerText = numero - 1;
+            if(lista.children.length === 0){
+                asignar_propiedades_elemento(letra,"letra","none");
+                asignar_propiedades_elemento(marcar,"marcar","ninguno");
+            }
+            if (mostrar.innerText === "0"){
+                asignar_propiedades_elemento(marcar,"marcar","todos");
+            }
+        }*/
     }
 
     function insertar_tarea(input_texto){
@@ -224,6 +291,7 @@
         if (tareas[0].nombre !== ""){
             mostrar_tareas_pantalla(tareas);
         }
+        input_texto.value = "";
     }
 
     document.addEventListener("DOMContentLoaded", init);
