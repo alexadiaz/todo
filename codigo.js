@@ -251,6 +251,29 @@
             case "borrar_todo":
                 borrar_todo.style.display = "inline-block";
             break;
+            case "marcar":
+                marcar.setAttribute("data-estado","todos");
+            break;
+        }
+    }
+
+    function propiedades_elementos_checkbox_marcados(accion,elemento){
+        switch(accion){
+            case "renglon":
+                elemento.setAttribute("data-name","0")
+            break;
+            case "checkbox":
+                elemento.className = "js_alinear_items js_checkbox";
+            break;
+            case "tarea":
+                elemento.style.textDecoration = "none";
+            break;
+            case "marcar":
+                marcar.setAttribute("data-estado","ninguno");
+            break;
+            case "borrar_todo":
+                borrar_todo.style.display = elemento;
+            break;
         }
     }
    
@@ -270,49 +293,45 @@
         renglon.addEventListener("mouseleave", () => mostrar_ocultar(renglon,false));
     }
 
-    function asignar_eventos_checkbox(checkbox,tarea,renglon){
+    function asignar_eventos_checkbox(renglon,checkbox,tarea){
         checkbox.addEventListener("click",() => {
-            let renglones = lista.children;
+            let renglones_marcados = null;
             let debeMarcar = null;
-            let count =0;
-            if (tarea.style.textDecoration != "line-through"){
-                asignar_propiedades("checkbox","renglon",renglon,"1");
-                asignar_propiedades("checkbox","checkbox",checkbox);
-                asignar_propiedades("checkbox","tarea",tarea);
-                asignar_propiedades("checkbox","borrar_todo");
-            
-
-                for (var i=0; i< lis.length;i++){
-                    if(lis[i].getAttribute("name")=== "1"){
-                        count =count +1;
-                    }
-                }
-                if (count=== lis.length){
+            if (tarea.style.textDecoration !== "line-through"){
+                asignar_propiedades("checkbox_sinmarcar","renglon",renglon);
+                asignar_propiedades("checkbox_sinmarcar","checkbox",checkbox);
+                asignar_propiedades("checkbox_sinmarcar","tarea",tarea);
+                asignar_propiedades("checkbox_sinmarcar","borrar_todo");
+                
+                renglones_marcados = renglones_line_through();
+                if (renglones_marcados === lista.children.length){
+                    asignar_propiedades("checkbox_sinmarcar","marcar");
                     debeMarcar=false;
-                    marcar.setAttribute("data-estado","todos");
                 }
                 contador(false);
             }
             else{
-                nuevoDivElement.style.textDecoration= "none";
-                nuevoLiElement.setAttribute("name","0");
-                nuevoMarcarElement.className= "js_alinear_items js_checkbox";
+                asignar_propiedades("checkbox_marcados","renglon",renglon);
+                asignar_propiedades("checkbox_marcados","checkbox",checkbox);
+                asignar_propiedades("checkbox_marcados","tarea",tarea);
+                asignar_propiedades("checkbox_marcados","marcar");
                 debeMarcar=true;
-                marcar.setAttribute("data-estado","ninguno");
-                for (var i=0; i< lis.length;i++){
-                    if(lis[i].getAttribute("name")=== "1"){
-                        count =count +1;
-                    }
-                }
-                if (count!== 0){
-                    borrar.style.display="inline-block";
-                }
-                else{
-                    borrar.style.display="none";
-                }
+                              
+                renglones_marcados = renglones_line_through();
+                renglones_marcados !== 0 ? asignar_propiedades("checkbox_marcados","borrar_todo","inline-block") : asignar_propiedades("checkbox_marcados","borrar_todo","none");
                 contador(true);
             }
         });
+    }
+
+    function renglones_line_through(){
+        let count =0;
+        for (let i of lista.children){
+            if (i.getAttribute("data-name") === "1") {
+                count += 1;
+            }
+        }
+        return count;
     }
 
     function mostrar_ocultar (renglon,is_mostrar){
