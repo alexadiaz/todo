@@ -28,6 +28,22 @@
             }
         };
 
+        //asignar_eventos_marcar(marcar);
+        //asignar_eventos_all();
+        //asignar_eventos_compelted();
+        //asignar_eventos_active();
+        //asignar_eventos_borrar_todo();
+    }
+
+    function foco(boton_actual){
+        all.classList.remove("foco");
+        completed.classList.remove("foco");
+        active.classList.remove("foco");
+        
+        boton_actual.classList.add("foco");
+    }
+
+    function asignar_eventos_marcar(marcar){
         /*marcar.addEventListener("click",function(){
 
             var ul= document.getElementById("lista");
@@ -64,20 +80,23 @@
                     actualizar_contador(true);
                 }
             }
-        });
+        });*/
+    }
 
-        borrar_todo.addEventListener("click",function(){
-            var ul = document.getElementById("lista");
-            var lis =ul.children;
+    function asignar_eventos_all(){
+        /*todos.addEventListener("click",function(){
+            foco(this);
 
-            for (var i = lis.length - 1; i >= 0; i--){
-                if (lis[i].getAttribute("name")==="1"){
-                    ul.removeChild(lis[i]);
-                }
-        }
-        });
+            var nuevoUlElement= document.getElementById("lista");
+            var lis= nuevoUlElement.children;
+            for (var i=0; i< lis.length;i++){
+                lis[i].style.display= "list-item";
+            }
+        });*/
+    }
 
-        rojos.addEventListener("click", function(){
+    function asignar_eventos_completed(){
+        /*rojos.addEventListener("click", function(){
             foco(this);
         
             var ul = document.querySelector("#lista");
@@ -92,9 +111,11 @@
                 }
             }
 
-        });
-        
-        negros.addEventListener("click", function(){
+        });*/
+    }
+
+    function asignar_eventos_active(){
+        /*negros.addEventListener("click", function(){
             foco(this);
 
             var nuevoUlElement= document.getElementById("lista");
@@ -107,30 +128,24 @@
                     lis[i].style.display="list-item";
                 }
             }
-        });
+        });*/
+    }
 
-        todos.addEventListener("click",function(){
-            foco(this);
+    function asignar_eventos_borrar_todo(){
+        /*borrar_todo.addEventListener("click",function(){
+            var ul = document.getElementById("lista");
+            var lis =ul.children;
 
-            var nuevoUlElement= document.getElementById("lista");
-            var lis= nuevoUlElement.children;
-            for (var i=0; i< lis.length;i++){
-                lis[i].style.display= "list-item";
+            for (var i = lis.length - 1; i >= 0; i--){
+                if (lis[i].getAttribute("name")==="1"){
+                    ul.removeChild(lis[i]);
+                }
             }
         });*/
     }
 
-    function foco(boton_actual){
-        all.classList.remove("foco");
-        completed.classList.remove("foco");
-        active.classList.remove("foco");
-        
-        boton_actual.classList.add("foco");
-    }
-
-    function agregar(textoElement){
-             
-        //boton eliminar
+    function asignar_eventos_eliminar(textoElement){
+        /*boton eliminar
         nuevoInputElement.addEventListener("click",function(){
             var li =this.parentNode;
             var ul = li.parentNode;
@@ -146,7 +161,7 @@
                 marcar = document.getElementById("marcar");
                 marcar.setAttribute("data-estado", "ninguno");
             }
-        });
+        });*/
     }
 
     function consultar_tareas_guardadas(){
@@ -173,6 +188,7 @@
 
             asignar_eventos_renglon(renglon);
             asignar_eventos_checkbox(renglon,checkbox,tarea);
+            //asignar_eventos_eliminar();
             
             lista.appendChild(renglon);
             renglon.appendChild(checkbox);
