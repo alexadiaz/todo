@@ -200,19 +200,22 @@
         return document.createElement(elemento);
     }
 
-    function asignar_propiedades(funcion,accion,elemento,valor){
+    function asignar_propiedades(funcion,accion,elemento,nombre_tarea){
         if (funcion === "pantalla"){
-            propiedades_elementos_pantalla(accion,elemento,valor);
+            propiedades_elementos_pantalla(accion,elemento,nombre_tarea);
         }
-        else if (funcion === "checkbox"){
-            propiedades_elementos_checkbox(accion,elemento,valor);
+        else if (funcion === "checkbox_sinmarcar"){
+            propiedades_elementos_checkbox_sinmarcar(accion,elemento);
+        }
+        else if (funcion === "checkbox_marcados"){
+            propiedades_elementos_checkbox_marcados(accion,elemento);
         }
         else if (funcion === "contador"){
             propiedades_elementos_contador(accion);
         }
     }
 
-    function propiedades_elementos_pantalla(accion,elemento,valor){
+    function propiedades_elementos_pantalla(accion,elemento,nombre_tarea){
         switch(accion){
             case "renglon":
                 elemento.className = "linea_renglon";
@@ -223,7 +226,7 @@
             break;
             case "tarea":
                 elemento.className = "js_alinear_items js_margen_items";
-                elemento.innerText = valor;
+                elemento.innerText = nombre_tarea;
             break;
             case "eliminar":
                 elemento.className = "botones js_boton_eliminar";
@@ -234,10 +237,10 @@
         }
     }
 
-    function propiedades_elementos_checkbox(accion,elemento,valor){
+    function propiedades_elementos_checkbox_sinmarcar(accion,elemento){
         switch(accion){
             case "renglon":
-                elemento.setAttribute("data-name",valor);
+                elemento.setAttribute("data-name","1");
             break;
             case "checkbox":
                 elemento.className = "js_alinear_items js_checkbox_marcado";
