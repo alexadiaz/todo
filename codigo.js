@@ -1,29 +1,23 @@
 
 (function(){
     "use strict";
-    var negros = null;
-    var rojos = null;
-    var todos = null; 
-
-    let lista = null;
     let marcar = null;
-    let letra = null;
-    let mostrar = null;
+    let lista = null;
+    let barra_inferior = null;
+    let contador = null;
+    let all = null;
+    let completed = null;
+    let active = null; 
     let borrar_todo = null;
     
     function init() {
-        
-        var texto = document.getElementById("texto");
-        //var borrar_todo= document.getElementById("borrar-todo");
-        negros = document.getElementById("negros");
-        rojos =  document.getElementById("rojos");
-        todos = document.getElementById("todos"); 
-        //marcar = document.getElementById("marcar");
-
-        lista = id_elemento("lista");
         marcar = id_elemento("marcar");
-        letra = id_elemento("letra");
-        mostrar = id_elemento("contador");
+        lista = id_elemento("lista");
+        barra_inferior = id_elemento("barra_inferior");
+        contador = id_elemento("contador");
+        all = id_elemento("all");
+        completed = id_elemento("completed"); 
+        active = id_elemento("active");
         borrar_todo = id_elemento("borrar-todo");
         
         consultar_tareas_guardadas();
@@ -34,7 +28,7 @@
             }
         };
 
-        marcar.addEventListener("click",function(){
+        /*marcar.addEventListener("click",function(){
 
             var ul= document.getElementById("lista");
             var lis = ul.children;
@@ -67,7 +61,7 @@
                     lis[i].setAttribute("name","");
                     div[i].style.textDecoration = "none";
                     input[i].className="js_alinear_items js_checkbox";
-                    contador(true);
+                    actualizar_contador(true);
                 }
             }
         });
@@ -123,7 +117,7 @@
             for (var i=0; i< lis.length;i++){
                 lis[i].style.display= "list-item";
             }
-        });
+        });*/
     }
 
     function foco(r){
@@ -146,13 +140,13 @@
             var ul = li.parentNode;
         
             if (nuevoDivElement.style.textDecoration !== "line-through"){
-                contador(false);
+                actualizar_contador(false);
             }
             
             ul.removeChild(li);
             
             if(ul.children.length === 0){
-                letra.style.display="none";
+                barra_inferior.style.display="none";
                 marcar = document.getElementById("marcar");
                 marcar.setAttribute("data-estado", "ninguno");
             }
@@ -189,7 +183,7 @@
             renglon.appendChild(tarea);
             renglon.appendChild(eliminar);
         }
-        contador(true,tareas.length);
+        actualizar_contador(true,tareas.length);
     }
 
     function id_elemento(id){
@@ -211,7 +205,7 @@
             propiedades_elementos_checkbox_marcados(accion,elemento);
         }
         else if (funcion === "contador"){
-            propiedades_elementos_contador(accion);
+            propiedades_elementos_contador(accion,elemento);
         }
     }
 
@@ -277,13 +271,13 @@
         }
     }
    
-    function propiedades_elementos_contador(accion){
+    function propiedades_elementos_contador(accion,elemento){
             switch(accion){
-            case "letra":
-                letra.style.display = "block";
+            case "barra_inferior":
+                barra_inferior.style.display = elemento;
             break;
             case "marcar":
-                marcar.setAttribute("data-estado","ninguno");
+                marcar.setAttribute("data-estado",elemento);
             break;
         }
     }
@@ -308,7 +302,7 @@
                     asignar_propiedades("checkbox_sinmarcar","marcar");
                     debeMarcar=false;
                 }
-                contador(false);
+                actualizar_contador(false);
             }
             else{
                 asignar_propiedades("checkbox_marcados","renglon",renglon);
@@ -319,7 +313,7 @@
                               
                 renglones_marcados = renglones_line_through();
                 renglones_marcados !== 0 ? asignar_propiedades("checkbox_marcados","borrar_todo","inline-block") : asignar_propiedades("checkbox_marcados","borrar_todo","none");
-                contador(true);
+                actualizar_contador(true);
             }
         });
     }
@@ -340,23 +334,23 @@
         eliminar.style.display = display;
     }
 
-    function contador (operador,numero_tareas){
-        let numero = parseInt(mostrar.innerText);
+    function actualizar_contador (operador,numero_tareas){
+        let numero = parseInt(contador.innerText);
         if (operador){
-            mostrar.innerText = numero + numero_tareas;
-            asignar_propiedades("contador","letra");
-            asignar_propiedades("contador","marcar");
+            contador.innerText = numero + numero_tareas;
+            asignar_propiedades("contador","barra_inferior","block");
+            asignar_propiedades("contador","marcar","ninguno");
         }
-        /*else{
-            mostrar.innerText = numero - 1;
-            if(lista.children.length === 0){
-                asignar_propiedades_elemento(letra,"letra","none");
-                asignar_propiedades_elemento(marcar,"marcar","ninguno");
+        else{
+            contador.innerText = numero - 1;
+            if (lista.children.length === 0){
+                asignar_propiedades("contador","barra_inferior","none");
+                asignar_propiedades("contador","marcar","ninguno");
             }
-            if (mostrar.innerText === "0"){
-                asignar_propiedades_elemento(marcar,"marcar","todos");
+            if (contador.innerText === "0"){
+                asignar_propiedades("contador","marcar","todos");
             }
-        }*/
+        }
     }
 
     function insertar_tarea(input_texto){
