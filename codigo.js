@@ -120,16 +120,12 @@
         });*/
     }
 
-    function foco(r){
-        var all= document.getElementById("todos");
-        var rojos = document.getElementById("rojos");
-        var negros = document.getElementById("negros");
-
+    function foco(boton_actual){
         all.classList.remove("foco");
-        rojos.classList.remove("foco");
-        negros.classList.remove("foco");
+        completed.classList.remove("foco");
+        active.classList.remove("foco");
         
-        r.classList.add("foco");
+        boton_actual.classList.add("foco");
     }
 
     function agregar(textoElement){
