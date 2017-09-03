@@ -182,7 +182,7 @@
             asignar_propiedades("pantalla","eliminar",eliminar);
 
             asignar_eventos_renglon(renglon);
-            asignar_eventos_checkbox(checkbox,tarea,renglon);
+            asignar_eventos_checkbox(renglon,checkbox,tarea);
             
             lista.appendChild(renglon);
             renglon.appendChild(checkbox);
