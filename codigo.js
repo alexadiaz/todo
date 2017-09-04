@@ -29,13 +29,13 @@
         };
 
         //asignar_eventos_marcar(marcar);
-        //asignar_eventos_all();
+        asignar_eventos_all();
         //asignar_eventos_compelted();
         //asignar_eventos_active();
         //asignar_eventos_borrar_todo();
     }
 
-    function foco(boton_actual){
+    function propiedades_elementos_foco(boton_actual){
         all.classList.remove("foco");
         completed.classList.remove("foco");
         active.classList.remove("foco");
@@ -84,15 +84,12 @@
     }
 
     function asignar_eventos_all(){
-        /*todos.addEventListener("click",function(){
-            foco(this);
-
-            var nuevoUlElement= document.getElementById("lista");
-            var lis= nuevoUlElement.children;
-            for (var i=0; i< lis.length;i++){
-                lis[i].style.display= "list-item";
+        all.addEventListener("click", function() {
+            propiedades_elementos_foco(this);
+            for (let i of lista.children){
+                i.style.display= "list-item"
             }
-        });*/
+        });
     }
 
     function asignar_eventos_completed(){
