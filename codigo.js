@@ -31,7 +31,7 @@
         //asignar_eventos_marcar(marcar);
         asignar_eventos_all();
         asignar_eventos_completed();
-        //asignar_eventos_active();
+        asignar_eventos_active();
         //asignar_eventos_borrar_todo();
     }
 
@@ -102,20 +102,12 @@
     }
 
     function asignar_eventos_active(){
-        /*negros.addEventListener("click", function(){
-            foco(this);
-
-            var nuevoUlElement= document.getElementById("lista");
-            var lis = nuevoUlElement.children;
-            for (var i=0; i< lis.length;i++){
-                if (lis[i].getAttribute("name")=== "1"){
-                    lis[i].style.display="none";
-                }
-                else{
-                    lis[i].style.display="list-item";
-                }
+        active.addEventListener("click", function(){
+            propiedades_elementos_foco(this);
+            for (let i of lista.children){
+                i.getAttribute("data-name") === "1" ? i.style.display="none" : i.style.display="list-item";
             }
-        });*/
+        });
     }
 
     function asignar_eventos_borrar_todo(){
