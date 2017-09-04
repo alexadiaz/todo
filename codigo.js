@@ -30,17 +30,9 @@
 
         //asignar_eventos_marcar(marcar);
         asignar_eventos_all();
-        //asignar_eventos_compelted();
+        asignar_eventos_completed();
         //asignar_eventos_active();
         //asignar_eventos_borrar_todo();
-    }
-
-    function propiedades_elementos_foco(boton_actual){
-        all.classList.remove("foco");
-        completed.classList.remove("foco");
-        active.classList.remove("foco");
-        
-        boton_actual.classList.add("foco");
     }
 
     function asignar_eventos_marcar(marcar){
@@ -83,6 +75,14 @@
         });*/
     }
 
+    function propiedades_elementos_foco(boton_actual){
+        all.classList.remove("foco");
+        completed.classList.remove("foco");
+        active.classList.remove("foco");
+        
+        boton_actual.classList.add("foco");
+    }
+
     function asignar_eventos_all(){
         all.addEventListener("click", function() {
             propiedades_elementos_foco(this);
@@ -93,22 +93,12 @@
     }
 
     function asignar_eventos_completed(){
-        /*rojos.addEventListener("click", function(){
-            foco(this);
-        
-            var ul = document.querySelector("#lista");
-            var lis = ul.querySelectorAll("li");
-            
-            for (var i=0; i< lis.length;i++){
-                if (lis[i].getAttribute("name")!= "1"){
-                    lis[i].style.display="none";
-                }
-                else{
-                    lis[i].style.display="list-item";
-                }
+        completed.addEventListener("click", function(){
+            propiedades_elementos_foco(this);
+            for (let i of lista.children){
+                i.getAttribute("data-name") !== "1" ? i.style.display="none" : i.style.display="list-item";
             }
-
-        });*/
+        });
     }
 
     function asignar_eventos_active(){
