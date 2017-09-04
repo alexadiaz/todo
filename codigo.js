@@ -32,7 +32,7 @@
         asignar_eventos_all();
         asignar_eventos_completed();
         asignar_eventos_active();
-        //asignar_eventos_borrar_todo();
+        asignar_eventos_borrar_todo();
     }
 
     function asignar_eventos_marcar(marcar){
@@ -111,16 +111,13 @@
     }
 
     function asignar_eventos_borrar_todo(){
-        /*borrar_todo.addEventListener("click",function(){
-            var ul = document.getElementById("lista");
-            var lis =ul.children;
-
-            for (var i = lis.length - 1; i >= 0; i--){
-                if (lis[i].getAttribute("name")==="1"){
-                    ul.removeChild(lis[i]);
+        borrar_todo.addEventListener("click", () =>{
+            for (let i = lista.children.length - 1; i >= 0; i--){
+                if (lista.children[i].getAttribute("data-name") === "1"){
+                    lista.removeChild(lista.children[i]);
                 }
             }
-        });*/
+        });
     }
 
     function asignar_eventos_eliminar(textoElement){
