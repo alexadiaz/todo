@@ -127,11 +127,8 @@
             let tarea = crear_elemento("div");
             let eliminar = crear_elemento("input");
             
-            asignar_propiedades("pantalla","renglon",renglon);
-            asignar_propiedades("pantalla","checkbox",checkbox);
-            asignar_propiedades("pantalla","tarea",tarea,nombre_tarea);
-            asignar_propiedades("pantalla","eliminar",eliminar);
-
+            propiedades_elementos_pantalla(nombre_tarea,renglon,checkbox,tarea,eliminar);
+            
             asignar_eventos_renglon(renglon);
             asignar_eventos_checkbox(renglon,checkbox,tarea);
             asignar_eventos_eliminar(eliminar,tarea);
@@ -153,10 +150,7 @@
     }
 
     function asignar_propiedades(funcion,accion,elemento,nombre_tarea){
-        if (funcion === "pantalla"){
-            propiedades_elementos_pantalla(accion,elemento,nombre_tarea);
-        }
-        else if (funcion === "checkbox_sinmarcar"){
+        if (funcion === "checkbox_sinmarcar"){
             propiedades_elementos_checkbox_sinmarcar(accion,elemento);
         }
         else if (funcion === "checkbox_marcados"){
@@ -167,26 +161,16 @@
         }
     }
 
-    function propiedades_elementos_pantalla(accion,elemento,nombre_tarea){
-        switch(accion){
-            case "renglon":
-                elemento.className = "linea_renglon";
-            break;
-            case "checkbox":
-                elemento.className = "js_alinear_items js_checkbox";
-                elemento.type = "checkbox";
-            break;
-            case "tarea":
-                elemento.className = "js_alinear_items js_margen_items";
-                elemento.innerText = nombre_tarea;
-            break;
-            case "eliminar":
-                elemento.className = "botones js_boton_eliminar";
-                elemento.type = "button";
-                elemento.value = "x";
-                elemento.style.display = "none";
-            break;
-        }
+    function propiedades_elementos_pantalla(nombre_tarea,renglon,checkbox,tarea,eliminar){
+        renglon.className = "linea_renglon";
+        checkbox.className = "js_alinear_items js_checkbox";
+        checkbox.type = "checkbox";
+        tarea.className = "js_alinear_items js_margen_items";
+        tarea.innerText = nombre_tarea;
+        eliminar.className = "botones js_boton_eliminar";
+        eliminar.type = "button";
+        eliminar.value = "x";
+        eliminar.style.display = "none";
     }
 
     function propiedades_elementos_checkbox_sinmarcar(accion,elemento){
