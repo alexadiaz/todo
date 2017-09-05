@@ -178,16 +178,13 @@
    }
    
     function propiedades_elementos_contador(accion,elemento1,elemento2){
-            switch(accion){
-            case "uno":
-                barra_inferior.style.display = elemento1;
-                marcar.setAttribute("data-estado",elemento2);
-            break;
-            case "dos":
-                marcar.setAttribute("data-estado",elemento1);
-            break;
+        if(accion){
+            barra_inferior.style.display = elemento1;
+            marcar.setAttribute("data-estado",elemento2);
+            return;
         }
-    }
+        marcar.setAttribute("data-estado",elemento1);
+   }
 
     function asignar_eventos_renglon(renglon){
         renglon.addEventListener("mouseover", () => mostrar_ocultar(renglon,true));
@@ -251,15 +248,15 @@
         let numero = parseInt(contador.innerText);
         if (operador){
             contador.innerText = numero + numero_tareas;
-            propiedades_elementos_contador("uno","block","ninguno");
+            propiedades_elementos_contador(true,"block","ninguno");
         }
         else{
             contador.innerText = numero - 1;
             if (lista.children.length === 0){
-                propiedades_elementos_contador("uno","none","ninguno");
+                propiedades_elementos_contador(true,"none","ninguno");
             }
             if (contador.innerText === "0"){
-                propiedades_elementos_contador("dos","todos");
+                propiedades_elementos_contador(false,"todos");
             }
         }
     }
