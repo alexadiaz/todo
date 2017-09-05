@@ -21,58 +21,48 @@
         borrar_todo = id_elemento("borrar-todo");
         
         consultar_tareas_guardadas();
-        
         texto.onkeypress = function(oKeyEvent){
             if(oKeyEvent.charCode === 13){
                 insertar_tarea(this);
             }
         };
-
-        //asignar_eventos_marcar(marcar);
+        asignar_eventos_marcar();
         asignar_eventos_all();
         asignar_eventos_completed();
         asignar_eventos_active();
         asignar_eventos_borrar_todo();
     }
 
-    function asignar_eventos_marcar(marcar){
-        /*marcar.addEventListener("click",function(){
-
-            var ul= document.getElementById("lista");
-            var lis = ul.children;
-            var div = ul.querySelectorAll("div");
-            var input = ul.querySelectorAll("input.js_alinear_items");
-            var borrar = document.getElementById("borrar-todo");
-            var mostrar = document.getElementById("contador");
-            var debeMarcar = null;
-
+    function asignar_eventos_marcar(){
+        marcar.addEventListener("click", () =>{
+            let div = lista.querySelectorAll("div");
+            let input = lista.querySelectorAll("input.js_alinear_items");
+            let debeMarcar = null;
             if(marcar.getAttribute("data-estado") === "ninguno"){
                 debeMarcar = true;
                 marcar.setAttribute("data-estado", "todos");
-                borrar.style.display="inline-block";
-                mostrar.innerText = "0"; 
+                borrar_todo.style.display="inline-block";
+                contador.innerText = "0"; 
             }    
             else {
                 debeMarcar = false;
                 marcar.setAttribute("data-estado", "ninguno");
-                borrar.style.display="none";
+                borrar_todo.style.display="none";
             }
-
-        for (var i=0; i<lis.length;i++){
-                
+            for (let i in Array.from(lista.children)){
                 if(debeMarcar === true) {
-                    lis[i].setAttribute("name","1");
+                    lista.children[i].setAttribute("data-name","1");
                     div[i].style.textDecoration = "line-through";
                     input[i].className="js_alinear_items js_checkbox_marcado";
                 }
                 else {   
-                    lis[i].setAttribute("name","");
+                    lista.children[i].setAttribute("data-name","");
                     div[i].style.textDecoration = "none";
                     input[i].className="js_alinear_items js_checkbox";
                     actualizar_contador(true);
                 }
             }
-        });*/
+        });
     }
 
     function propiedades_elementos_foco(boton_actual){
@@ -120,26 +110,6 @@
         });
     }
 
-    function asignar_eventos_eliminar(textoElement){
-        /*boton eliminar
-        nuevoInputElement.addEventListener("click",function(){
-            var li =this.parentNode;
-            var ul = li.parentNode;
-        
-            if (nuevoDivElement.style.textDecoration !== "line-through"){
-                actualizar_contador(false);
-            }
-            
-            ul.removeChild(li);
-            
-            if(ul.children.length === 0){
-                barra_inferior.style.display="none";
-                marcar = document.getElementById("marcar");
-                marcar.setAttribute("data-estado", "ninguno");
-            }
-        });*/
-    }
-
     function consultar_tareas_guardadas(){
         fetch("http://localhost:3000/consultar")
 	    .then(response => response.json())
@@ -164,7 +134,7 @@
 
             asignar_eventos_renglon(renglon);
             asignar_eventos_checkbox(renglon,checkbox,tarea);
-            //asignar_eventos_eliminar();
+            asignar_eventos_eliminar(eliminar,tarea);
             
             lista.appendChild(renglon);
             renglon.appendChild(checkbox);
@@ -302,6 +272,20 @@
                 renglones_marcados = renglones_line_through();
                 renglones_marcados !== 0 ? asignar_propiedades("checkbox_marcados","borrar_todo","inline-block") : asignar_propiedades("checkbox_marcados","borrar_todo","none");
                 actualizar_contador(true);
+            }
+        });
+    }
+
+    function asignar_eventos_eliminar(eliminar,tarea){
+        eliminar.addEventListener("click",function(){
+            let li = this.parentNode;
+            if (tarea.style.textDecoration !== "line-through"){
+                actualizar_contador(false);
+            }
+            lista.removeChild(li);
+            if(lista.children.length === 0){
+                barra_inferior.style.display="none";
+                marcar.setAttribute("data-estado", "ninguno");
             }
         });
     }
