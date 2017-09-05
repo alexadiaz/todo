@@ -156,9 +156,7 @@
         else if (funcion === "checkbox_marcados"){
             propiedades_elementos_checkbox_marcados(accion,elemento);
         }
-        else if (funcion === "contador"){
-            propiedades_elementos_contador(accion,elemento);
-        }
+     
     }
 
     function propiedades_elementos_pantalla(nombre_tarea,renglon,checkbox,tarea,eliminar){
@@ -213,13 +211,14 @@
         }
     }
    
-    function propiedades_elementos_contador(accion,elemento){
+    function propiedades_elementos_contador(accion,elemento1,elemento2){
             switch(accion){
-            case "barra_inferior":
-                barra_inferior.style.display = elemento;
+            case "uno":
+                barra_inferior.style.display = elemento1;
+                marcar.setAttribute("data-estado",elemento2);
             break;
-            case "marcar":
-                marcar.setAttribute("data-estado",elemento);
+            case "dos":
+                marcar.setAttribute("data-estado",elemento1);
             break;
         }
     }
@@ -294,17 +293,15 @@
         let numero = parseInt(contador.innerText);
         if (operador){
             contador.innerText = numero + numero_tareas;
-            asignar_propiedades("contador","barra_inferior","block");
-            asignar_propiedades("contador","marcar","ninguno");
+            propiedades_elementos_contador("uno","block","ninguno");
         }
         else{
             contador.innerText = numero - 1;
             if (lista.children.length === 0){
-                asignar_propiedades("contador","barra_inferior","none");
-                asignar_propiedades("contador","marcar","ninguno");
+                propiedades_elementos_contador("uno","none","ninguno");
             }
             if (contador.innerText === "0"){
-                asignar_propiedades("contador","marcar","todos");
+                propiedades_elementos_contador("dos","todos");
             }
         }
     }
