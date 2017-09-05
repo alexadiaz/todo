@@ -116,6 +116,9 @@
     }
 
     function mostrar_tareas_pantalla(tareas){
+        while (lista.firstChild !== null){
+            lista.removeChild(lista.firstChild);
+        }
         for (let i in tareas){
             let nombre_tarea = tareas[i].nombre;
             
@@ -135,6 +138,7 @@
             renglon.appendChild(tarea);
             renglon.appendChild(eliminar);
         }
+        contador.innerText =0;
         actualizar_contador(true,tareas.length);
     }
 
