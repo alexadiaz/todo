@@ -65,7 +65,6 @@
                     lista.children[i].setAttribute("data-name","");
                     div[i].style.textDecoration = "none";
                     input[i].className="js_alinear_items js_checkbox";
-                    actualizar_contador(true);
                 }
             }
         });
@@ -202,6 +201,7 @@
         }
         marcar.setAttribute("data-estado", "ninguno");
         borrar_todo.style.display="none";
+        actualizar_contador(true,lista.children.length);
     }
 
     function propiedades_elementos_foco(boton_actual){
