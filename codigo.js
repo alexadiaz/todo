@@ -33,6 +33,17 @@
         asignar_eventos_borrar_todo();
     }
 
+    function propiedades_elementos_marcar(accion){
+        if (accion){
+            marcar.setAttribute("data-estado", "todos");
+            borrar_todo.style.display="inline-block";
+            contador.innerText = "0"; 
+            return;
+        }
+        marcar.setAttribute("data-estado", "ninguno");
+        borrar_todo.style.display="none";
+    }
+
     function asignar_eventos_marcar(){
         marcar.addEventListener("click", () =>{
             let div = lista.querySelectorAll("div");
@@ -40,14 +51,11 @@
             let debeMarcar = null;
             if(marcar.getAttribute("data-estado") === "ninguno"){
                 debeMarcar = true;
-                marcar.setAttribute("data-estado", "todos");
-                borrar_todo.style.display="inline-block";
-                contador.innerText = "0"; 
+                propiedades_elementos_marcar(true);
             }    
             else {
                 debeMarcar = false;
-                marcar.setAttribute("data-estado", "ninguno");
-                borrar_todo.style.display="none";
+                propiedades_elementos_marcar(false);
             }
             for (let i in Array.from(lista.children)){
                 if(debeMarcar === true) {
