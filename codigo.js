@@ -149,19 +149,19 @@
             let renglones_marcados = null;
             let debeMarcar = null;
             if (tarea.style.textDecoration !== "line-through"){
-                propiedades_elementos_checkbox_sinmarcar(renglon,checkbox,tarea);
+                propiedades_elementos_checkbox_sinmarcar(true,renglon,checkbox,tarea);
                 renglones_marcados = renglones_line_through();
                 if (renglones_marcados === lista.children.length){
-                    asignar_propiedades("checkbox_sinmarcar","marcar");
+                    propiedades_elementos_checkbox_sinmarcar(false);
                     debeMarcar=false;
                 }
                 actualizar_contador(false);
             }
             else{
-                propiedades_elementos_checkbox_marcados(renglon,checkbox,tarea);
+                propiedades_elementos_checkbox_marcados(true,renglon,checkbox,tarea);
                 debeMarcar=true;
                 renglones_marcados = renglones_line_through();
-                renglones_marcados !== 0 ? asignar_propiedades("checkbox_marcados","borrar_todo","inline-block") : asignar_propiedades("checkbox_marcados","borrar_todo","none");
+                renglones_marcados !== 0 ?  propiedades_elementos_checkbox_marcados(false,"inline-block") :  propiedades_elementos_checkbox_marcados(false,"none");
                 actualizar_contador(true);
             }
         });
@@ -212,21 +212,27 @@
         boton_actual.classList.add("foco");
     }
 
-    function propiedades_elementos_checkbox_sinmarcar(renglon,checkbox,tarea){
-        renglon.setAttribute("data-name","1");
-        checkbox.className = "js_alinear_items js_checkbox_marcado";
-        tarea.style.textDecoration = "line-through";
-        borrar_todo.style.display = "inline-block";
+    function propiedades_elementos_checkbox_sinmarcar(accion,renglon,checkbox,tarea){
+        if(accion){
+            renglon.setAttribute("data-name","1");
+            checkbox.className = "js_alinear_items js_checkbox_marcado";
+            tarea.style.textDecoration = "line-through";
+            borrar_todo.style.display = "inline-block";
+            return;
+        }
         marcar.setAttribute("data-estado","todos");
-   }
+    }
 
-    function propiedades_elementos_checkbox_marcados(renglon,checkbox,tarea){
-        renglon.setAttribute("data-name","0")
-        checkbox.className = "js_alinear_items js_checkbox";
-        tarea.style.textDecoration = "none";
-        marcar.setAttribute("data-estado","ninguno");
-        borrar_todo.style.display = elemento;
-   }
+    function propiedades_elementos_checkbox_marcados(accion,renglon,checkbox,tarea){
+        if(accion){
+            renglon.setAttribute("data-name","0")
+            checkbox.className = "js_alinear_items js_checkbox";
+            tarea.style.textDecoration = "none";
+            marcar.setAttribute("data-estado","ninguno");
+            return;
+        }
+            borrar_todo.style.display = renglon;
+    }
    
     function propiedades_elementos_contador(accion,elemento1,elemento2){
         if(accion){
