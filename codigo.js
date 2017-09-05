@@ -161,7 +161,7 @@
                 debeMarcar=true;
                 renglones_marcados = renglones_line_through();
                 renglones_marcados !== 0 ?  propiedades_elementos_checkbox_marcados(false,"inline-block") :  propiedades_elementos_checkbox_marcados(false,"none");
-                actualizar_contador(true);
+                actualizar_contador(true,1);
             }
         });
     }
