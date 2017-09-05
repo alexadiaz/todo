@@ -149,16 +149,6 @@
         return document.createElement(elemento);
     }
 
-    function asignar_propiedades(funcion,accion,elemento,nombre_tarea){
-        if (funcion === "checkbox_sinmarcar"){
-            propiedades_elementos_checkbox_sinmarcar(accion,elemento);
-        }
-        else if (funcion === "checkbox_marcados"){
-            propiedades_elementos_checkbox_marcados(accion,elemento);
-        }
-     
-    }
-
     function propiedades_elementos_pantalla(nombre_tarea,renglon,checkbox,tarea,eliminar){
         renglon.className = "linea_renglon";
         checkbox.className = "js_alinear_items js_checkbox";
@@ -171,45 +161,21 @@
         eliminar.style.display = "none";
     }
 
-    function propiedades_elementos_checkbox_sinmarcar(accion,elemento){
-        switch(accion){
-            case "renglon":
-                elemento.setAttribute("data-name","1");
-            break;
-            case "checkbox":
-                elemento.className = "js_alinear_items js_checkbox_marcado";
-            break;
-            case "tarea":
-                elemento.style.textDecoration = "line-through";
-            break;
-            case "borrar_todo":
-                borrar_todo.style.display = "inline-block";
-            break;
-            case "marcar":
-                marcar.setAttribute("data-estado","todos");
-            break;
-        }
-    }
+    function propiedades_elementos_checkbox_sinmarcar(renglon,checkbox,tarea){
+        renglon.setAttribute("data-name","1");
+        checkbox.className = "js_alinear_items js_checkbox_marcado";
+        tarea.style.textDecoration = "line-through";
+        borrar_todo.style.display = "inline-block";
+        marcar.setAttribute("data-estado","todos");
+   }
 
-    function propiedades_elementos_checkbox_marcados(accion,elemento){
-        switch(accion){
-            case "renglon":
-                elemento.setAttribute("data-name","0")
-            break;
-            case "checkbox":
-                elemento.className = "js_alinear_items js_checkbox";
-            break;
-            case "tarea":
-                elemento.style.textDecoration = "none";
-            break;
-            case "marcar":
-                marcar.setAttribute("data-estado","ninguno");
-            break;
-            case "borrar_todo":
-                borrar_todo.style.display = elemento;
-            break;
-        }
-    }
+    function propiedades_elementos_checkbox_marcados(renglon,checkbox,tarea){
+        renglon.setAttribute("data-name","0")
+        checkbox.className = "js_alinear_items js_checkbox";
+        tarea.style.textDecoration = "none";
+        marcar.setAttribute("data-estado","ninguno");
+        borrar_todo.style.display = elemento;
+   }
    
     function propiedades_elementos_contador(accion,elemento1,elemento2){
             switch(accion){
@@ -233,11 +199,7 @@
             let renglones_marcados = null;
             let debeMarcar = null;
             if (tarea.style.textDecoration !== "line-through"){
-                asignar_propiedades("checkbox_sinmarcar","renglon",renglon);
-                asignar_propiedades("checkbox_sinmarcar","checkbox",checkbox);
-                asignar_propiedades("checkbox_sinmarcar","tarea",tarea);
-                asignar_propiedades("checkbox_sinmarcar","borrar_todo");
-                
+                propiedades_elementos_checkbox_sinmarcar(renglon,checkbox,tarea);
                 renglones_marcados = renglones_line_through();
                 if (renglones_marcados === lista.children.length){
                     asignar_propiedades("checkbox_sinmarcar","marcar");
@@ -246,12 +208,8 @@
                 actualizar_contador(false);
             }
             else{
-                asignar_propiedades("checkbox_marcados","renglon",renglon);
-                asignar_propiedades("checkbox_marcados","checkbox",checkbox);
-                asignar_propiedades("checkbox_marcados","tarea",tarea);
-                asignar_propiedades("checkbox_marcados","marcar");
+                propiedades_elementos_checkbox_marcados(renglon,checkbox,tarea);
                 debeMarcar=true;
-                              
                 renglones_marcados = renglones_line_through();
                 renglones_marcados !== 0 ? asignar_propiedades("checkbox_marcados","borrar_todo","inline-block") : asignar_propiedades("checkbox_marcados","borrar_todo","none");
                 actualizar_contador(true);
