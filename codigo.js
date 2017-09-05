@@ -76,7 +76,7 @@
     function asignar_eventos_all(){
         all.addEventListener("click", function() {
             propiedades_elementos_foco(this);
-            for (let i of lista.children){
+            for (let i of Array.from(lista.children)){
                 i.style.display= "list-item"
             }
         });
@@ -85,7 +85,7 @@
     function asignar_eventos_completed(){
         completed.addEventListener("click", function(){
             propiedades_elementos_foco(this);
-            for (let i of lista.children){
+            for (let i of Array.from(lista.children)){
                 i.getAttribute("data-name") !== "1" ? i.style.display="none" : i.style.display="list-item";
             }
         });
@@ -94,7 +94,7 @@
     function asignar_eventos_active(){
         active.addEventListener("click", function(){
             propiedades_elementos_foco(this);
-            for (let i of lista.children){
+            for (let i of Array.from(lista.children)){
                 i.getAttribute("data-name") === "1" ? i.style.display="none" : i.style.display="list-item";
             }
         });
@@ -292,7 +292,7 @@
 
     function renglones_line_through(){
         let count =0;
-        for (let i of lista.children){
+        for (let i of Array.from(lista.children)){
             if (i.getAttribute("data-name") === "1") {
                 count += 1;
             }
