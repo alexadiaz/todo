@@ -20,28 +20,26 @@
         active = id_elemento("active");
         borrar_todo = id_elemento("borrar-todo");
         
-        consultar_tareas_guardadas();
-        texto.onkeypress = function(oKeyEvent){
-            if(oKeyEvent.charCode === 13){
-                insertar_tarea(this);
-            }
-        };
         asignar_eventos_marcar();
         asignar_eventos_all();
         asignar_eventos_completed();
         asignar_eventos_active();
         asignar_eventos_borrar_todo();
+        consultar_tareas_guardadas();
+        
+        texto.onkeypress = function(oKeyEvent){
+            if(oKeyEvent.charCode === 13){
+                insertar_tarea(this);
+            }
+        };
     }
 
-    function propiedades_elementos_marcar(accion){
-        if (accion){
-            marcar.setAttribute("data-estado", "todos");
-            borrar_todo.style.display="inline-block";
-            contador.innerText = "0"; 
-            return;
-        }
-        marcar.setAttribute("data-estado", "ninguno");
-        borrar_todo.style.display="none";
+    function id_elemento(id){
+        return document.getElementById(id);
+    }
+
+    function crear_elemento(elemento){
+        return document.createElement(elemento);
     }
 
     function asignar_eventos_marcar(){
@@ -71,14 +69,6 @@
                 }
             }
         });
-    }
-
-    function propiedades_elementos_foco(boton_actual){
-        all.classList.remove("foco");
-        completed.classList.remove("foco");
-        active.classList.remove("foco");
-        
-        boton_actual.classList.add("foco");
     }
 
     function asignar_eventos_all(){
@@ -135,11 +125,11 @@
             let tarea = crear_elemento("div");
             let eliminar = crear_elemento("input");
             
-            propiedades_elementos_pantalla(nombre_tarea,renglon,checkbox,tarea,eliminar);
-            
             asignar_eventos_renglon(renglon);
             asignar_eventos_checkbox(renglon,checkbox,tarea);
             asignar_eventos_eliminar(eliminar,tarea);
+
+            propiedades_elementos_pantalla(nombre_tarea,renglon,checkbox,tarea,eliminar);
             
             lista.appendChild(renglon);
             renglon.appendChild(checkbox);
@@ -148,51 +138,6 @@
         }
         actualizar_contador(true,tareas.length);
     }
-
-    function id_elemento(id){
-        return document.getElementById(id);
-    }
-
-    function crear_elemento(elemento){
-        return document.createElement(elemento);
-    }
-
-    function propiedades_elementos_pantalla(nombre_tarea,renglon,checkbox,tarea,eliminar){
-        renglon.className = "linea_renglon";
-        checkbox.className = "js_alinear_items js_checkbox";
-        checkbox.type = "checkbox";
-        tarea.className = "js_alinear_items js_margen_items";
-        tarea.innerText = nombre_tarea;
-        eliminar.className = "botones js_boton_eliminar";
-        eliminar.type = "button";
-        eliminar.value = "x";
-        eliminar.style.display = "none";
-    }
-
-    function propiedades_elementos_checkbox_sinmarcar(renglon,checkbox,tarea){
-        renglon.setAttribute("data-name","1");
-        checkbox.className = "js_alinear_items js_checkbox_marcado";
-        tarea.style.textDecoration = "line-through";
-        borrar_todo.style.display = "inline-block";
-        marcar.setAttribute("data-estado","todos");
-   }
-
-    function propiedades_elementos_checkbox_marcados(renglon,checkbox,tarea){
-        renglon.setAttribute("data-name","0")
-        checkbox.className = "js_alinear_items js_checkbox";
-        tarea.style.textDecoration = "none";
-        marcar.setAttribute("data-estado","ninguno");
-        borrar_todo.style.display = elemento;
-   }
-   
-    function propiedades_elementos_contador(accion,elemento1,elemento2){
-        if(accion){
-            barra_inferior.style.display = elemento1;
-            marcar.setAttribute("data-estado",elemento2);
-            return;
-        }
-        marcar.setAttribute("data-estado",elemento1);
-   }
 
     function asignar_eventos_renglon(renglon){
         renglon.addEventListener("mouseover", () => mostrar_ocultar(renglon,true));
@@ -234,6 +179,62 @@
                 marcar.setAttribute("data-estado", "ninguno");
             }
         });
+    }
+
+    function propiedades_elementos_pantalla(nombre_tarea,renglon,checkbox,tarea,eliminar){
+        renglon.className = "linea_renglon";
+        checkbox.className = "js_alinear_items js_checkbox";
+        checkbox.type = "checkbox";
+        tarea.className = "js_alinear_items js_margen_items";
+        tarea.innerText = nombre_tarea;
+        eliminar.className = "botones js_boton_eliminar";
+        eliminar.type = "button";
+        eliminar.value = "x";
+        eliminar.style.display = "none";
+    }
+
+    function propiedades_elementos_marcar(accion){
+        if (accion){
+            marcar.setAttribute("data-estado", "todos");
+            borrar_todo.style.display="inline-block";
+            contador.innerText = "0"; 
+            return;
+        }
+        marcar.setAttribute("data-estado", "ninguno");
+        borrar_todo.style.display="none";
+    }
+
+    function propiedades_elementos_foco(boton_actual){
+        all.classList.remove("foco");
+        completed.classList.remove("foco");
+        active.classList.remove("foco");
+        
+        boton_actual.classList.add("foco");
+    }
+
+    function propiedades_elementos_checkbox_sinmarcar(renglon,checkbox,tarea){
+        renglon.setAttribute("data-name","1");
+        checkbox.className = "js_alinear_items js_checkbox_marcado";
+        tarea.style.textDecoration = "line-through";
+        borrar_todo.style.display = "inline-block";
+        marcar.setAttribute("data-estado","todos");
+   }
+
+    function propiedades_elementos_checkbox_marcados(renglon,checkbox,tarea){
+        renglon.setAttribute("data-name","0")
+        checkbox.className = "js_alinear_items js_checkbox";
+        tarea.style.textDecoration = "none";
+        marcar.setAttribute("data-estado","ninguno");
+        borrar_todo.style.display = elemento;
+   }
+   
+    function propiedades_elementos_contador(accion,elemento1,elemento2){
+        if(accion){
+            barra_inferior.style.display = elemento1;
+            marcar.setAttribute("data-estado",elemento2);
+            return;
+        }
+        marcar.setAttribute("data-estado",elemento1);
     }
 
     function renglones_line_through(){
