@@ -279,7 +279,13 @@
     function insertar_tarea(input_texto){
         let tareas = [{nombre: input_texto.value}];
         if (tareas[0].nombre !== ""){
-            mostrar_tareas_pantalla(tareas);
+            fetch("http://localhost:3000/insertar/" + tareas[0].nombre)
+            .then(respuesta => respuesta.json())
+            .then(mensaje => {
+                if(mensaje === "Tarea ingresada ok"){
+                    mostrar_tareas_pantalla(tareas);
+                }
+            });
         }
         input_texto.value = "";
     }
