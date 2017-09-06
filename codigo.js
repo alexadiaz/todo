@@ -120,22 +120,24 @@
             lista.removeChild(lista.firstChild);
         }
         for (let i in tareas){
-            let nombre_tarea = tareas[i].nombre;
-            
             let renglon = crear_elemento("li");
             let checkbox = crear_elemento("input");
             let tarea = crear_elemento("div");
+            let creacion = crear_elemento ("div");
+            let finalizacion = crear_elemento ("div");
             let eliminar = crear_elemento("input");
             
             asignar_eventos_renglon(renglon);
             asignar_eventos_checkbox(renglon,checkbox,tarea);
             asignar_eventos_eliminar(eliminar,tarea);
 
-            propiedades_elementos_pantalla(nombre_tarea,renglon,checkbox,tarea,eliminar);
+            propiedades_elementos_pantalla(tareas[i],renglon,checkbox,tarea,creacion,finalizacion,eliminar);
             
             lista.appendChild(renglon);
             renglon.appendChild(checkbox);
             renglon.appendChild(tarea);
+            renglon.appendChild(creacion);
+            renglon.appendChild(finalizacion);
             renglon.appendChild(eliminar);
         }
         contador.innerText =0;
@@ -189,12 +191,16 @@
         });
     }
 
-    function propiedades_elementos_pantalla(nombre_tarea,renglon,checkbox,tarea,eliminar){
+    function propiedades_elementos_pantalla(tareas,renglon,checkbox,tarea,creacion,finalizacion,eliminar){
         renglon.className = "linea_renglon";
         checkbox.className = "js_alinear_items js_checkbox";
         checkbox.type = "checkbox";
         tarea.className = "js_alinear_items js_margen_items";
-        tarea.innerText = nombre_tarea;
+        tarea.innerText = tareas.nombre;
+        creacion.className = "js_alinear_items js_margen_items";
+        creacion.innerText = tareas.creacion;
+        finalizacion.className = "js_alinear_items js_margen_items";
+        finalizacion.innerText = tareas.finalizacion;
         eliminar.className = "botones js_boton_eliminar";
         eliminar.type = "button";
         eliminar.value = "x";
