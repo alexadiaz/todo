@@ -172,11 +172,16 @@
 
     function asignar_eventos_eliminar(eliminar,tarea){
         eliminar.addEventListener("click",function(){
-            let li = this.parentNode;
             if (tarea.style.textDecoration !== "line-through"){
                 actualizar_contador(false);
             }
-            lista.removeChild(li);
+            fetch("http://localhost:3000/borrar/" + tarea.innerText)
+            .then (respuesta => respuesta.json())
+            .then (mensaje =>{
+                if(mensaje === "Tarea borrada ok"){
+                    consultar_tareas_guardadas();
+                }
+            });
             if(lista.children.length === 0){
                 barra_inferior.style.display="none";
                 marcar.setAttribute("data-estado", "ninguno");
@@ -287,7 +292,7 @@
             .then(respuesta => respuesta.json())
             .then(mensaje => {
                 if(mensaje === "Tarea ingresada ok"){
-                    mostrar_tareas_pantalla(tareas);
+                    consultar_tareas_guardadas();
                 }
             });
         }
