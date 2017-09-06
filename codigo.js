@@ -161,13 +161,20 @@
             let renglones_marcados = null;
             let debeMarcar = null;
             if (tarea.style.textDecoration !== "line-through"){
-                propiedades_elementos_checkbox_sinmarcar(true,renglon,checkbox,tarea);
+                fetch("http://localhost:3000/completar/" + tarea.innerText)
+                .then (respuesta => respuesta.json())
+                .then (mensaje =>{
+                    console.log("completar");
+                    if(mensaje === "Tarea completada ok"){
+                        return consultar_tareas_guardadas();
+                    }
+                }).then (() =>{
                 renglones_marcados = renglones_line_through();
                 if (renglones_marcados === lista.children.length){
                     propiedades_elementos_checkbox_sinmarcar(false);
                     debeMarcar=false;
                 }
-                actualizar_contador(false);
+                });
             }
             else{
                 propiedades_elementos_checkbox_marcados(true,renglon,checkbox,tarea);
