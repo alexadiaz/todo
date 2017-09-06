@@ -118,35 +118,35 @@
 
     function mostrar_tareas_pantalla(tareas){
         return new Promise (resolve =>{
-        while (lista.firstChild !== null){
-            lista.removeChild(lista.firstChild);
-        }
-        for (let i in tareas){
-            let renglon = crear_elemento("li");
-            let checkbox = crear_elemento("input");
-            let tarea = crear_elemento("div");
-            let creacion = crear_elemento ("div");
-            let finalizacion = crear_elemento ("div");
-            let eliminar = crear_elemento("input");
-            
-            asignar_eventos_renglon(renglon);
-            asignar_eventos_checkbox(renglon,checkbox,tarea);
-            asignar_eventos_eliminar(eliminar,tarea);
+            while (lista.firstChild !== null){
+                lista.removeChild(lista.firstChild);
+            }
+            for (let i in tareas){
+                let renglon = crear_elemento("li");
+                let checkbox = crear_elemento("input");
+                let tarea = crear_elemento("div");
+                let creacion = crear_elemento ("div");
+                let finalizacion = crear_elemento ("div");
+                let eliminar = crear_elemento("input");
+                        
+                asignar_eventos_renglon(renglon);
+                asignar_eventos_checkbox(renglon,checkbox,tarea);
+                asignar_eventos_eliminar(eliminar,tarea);
 
-            propiedades_elementos_pantalla(tareas[i],renglon,checkbox,tarea,creacion,finalizacion,eliminar);
+                propiedades_elementos_pantalla(tareas[i],renglon,checkbox,tarea,creacion,finalizacion,eliminar);
                 if (finalizacion.innerText !== ""){
                     propiedades_elementos_checkbox_sinmarcar(true,renglon,checkbox,tarea);
                 }
-            
-            lista.appendChild(renglon);
-            renglon.appendChild(checkbox);
-            renglon.appendChild(tarea);
-            renglon.appendChild(creacion);
-            renglon.appendChild(finalizacion);
-            renglon.appendChild(eliminar);
-        }
-        contador.innerText =0;
-        actualizar_contador(true,tareas.length);
+                
+                lista.appendChild(renglon);
+                renglon.appendChild(checkbox);
+                renglon.appendChild(tarea);
+                renglon.appendChild(creacion);
+                renglon.appendChild(finalizacion);
+                renglon.appendChild(eliminar);
+            }
+            contador.innerText =0;
+            actualizar_contador(true,tareas.length);
             resolve (true);
         });
     }
@@ -169,11 +169,11 @@
                         return consultar_tareas_guardadas();
                     }
                 }).then (() =>{
-                renglones_marcados = renglones_line_through();
-                if (renglones_marcados === lista.children.length){
-                    propiedades_elementos_checkbox_sinmarcar(false);
-                    debeMarcar=false;
-                }
+                    renglones_marcados = renglones_line_through();
+                    if (renglones_marcados === lista.children.length){
+                        propiedades_elementos_checkbox_sinmarcar(false);
+                        debeMarcar=false;
+                    }
                 });
             }
             else{
@@ -189,7 +189,7 @@
     function asignar_eventos_eliminar(eliminar,tarea){
         eliminar.addEventListener("click",function(){
             if (tarea.style.textDecoration !== "line-through"){
-                actualizar_contador(false);
+                actualizar_contador(false,1);
             }
             fetch("http://localhost:3000/borrar/" + tarea.innerText)
             .then (respuesta => respuesta.json())
@@ -230,7 +230,7 @@
         }
         marcar.setAttribute("data-estado", "ninguno");
         borrar_todo.style.display="none";
-        actualizar_contador(true,lista.children.length);
+        contador.innerText = lista.children.length;
     }
 
     function propiedades_elementos_foco(boton_actual){
@@ -291,11 +291,11 @@
     function actualizar_contador (operador,numero_tareas){
         let numero = parseInt(contador.innerText);
         if (operador){
-            contador.innerText = numero + numero_tareas;
+            contador.innerText = numero_tareas - renglones_line_through();
             propiedades_elementos_contador(true,"block","ninguno");
         }
         else{
-            contador.innerText = numero - 1;
+            contador.innerText = numero - numero_tareas;
             if (lista.children.length === 0){
                 propiedades_elementos_contador(true,"none","ninguno");
             }
