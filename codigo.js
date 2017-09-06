@@ -134,6 +134,9 @@
             asignar_eventos_eliminar(eliminar,tarea);
 
             propiedades_elementos_pantalla(tareas[i],renglon,checkbox,tarea,creacion,finalizacion,eliminar);
+                if (finalizacion.innerText !== ""){
+                    propiedades_elementos_checkbox_sinmarcar(true,renglon,checkbox,tarea);
+                }
             
             lista.appendChild(renglon);
             renglon.appendChild(checkbox);
