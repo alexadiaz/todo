@@ -108,14 +108,16 @@
     }
 
     function consultar_tareas_guardadas(){
-        fetch("http://localhost:3000/consultar")
+        return fetch("http://localhost:3000/consultar")
 	    .then(response => response.json())
         .then(tareas => {
-            mostrar_tareas_pantalla(tareas);
+            console.log("consultar tareas")
+            return mostrar_tareas_pantalla(tareas);
         });
     }
 
     function mostrar_tareas_pantalla(tareas){
+        return new Promise (resolve =>{
         while (lista.firstChild !== null){
             lista.removeChild(lista.firstChild);
         }
@@ -142,6 +144,8 @@
         }
         contador.innerText =0;
         actualizar_contador(true,tareas.length);
+            resolve (true);
+        });
     }
 
     function asignar_eventos_renglon(renglon){
