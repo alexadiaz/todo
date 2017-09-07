@@ -10,6 +10,7 @@
     let active = null; 
     let borrar_todo = null;
     let tareas_marcadas = null;
+    let debeMarcar = true;
     
     function init() {
         marcar = id_elemento("marcar");
@@ -45,29 +46,13 @@
 
     function asignar_eventos_marcar(){
         marcar.addEventListener("click", () =>{
-            let div = lista.querySelectorAll("div");
-            let input = lista.querySelectorAll("input.js_alinear_items");
-            let debeMarcar = null;
-            if(marcar.getAttribute("data-estado") === "ninguno"){
-                debeMarcar = true;
-                propiedades_elementos_marcar(true);
-            }    
-            else {
-                debeMarcar = false;
-                propiedades_elementos_marcar(false);
-            }
-            for (let i in Array.from(lista.children)){
-                if(debeMarcar === true) {
-                    lista.children[i].setAttribute("data-name","1");
-                    div[i].style.textDecoration = "line-through";
-                    input[i].className="js_alinear_items js_checkbox_marcado";
+            fetch("http://localhost:3000/completar_todo")
+            .then(respuesta => respuesta.json())
+            .then(mensaje =>{
+                if (mensaje === "Tareas completadas ok"){
+                    consultar_tareas_guardadas();
                 }
-                else {   
-                    lista.children[i].setAttribute("data-name","");
-                    div[i].style.textDecoration = "none";
-                    input[i].className="js_alinear_items js_checkbox";
-                }
-            }
+            });
         });
     }
 
