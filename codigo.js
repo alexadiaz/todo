@@ -136,7 +136,7 @@
                 asignar_eventos_eliminar(eliminar,tarea,tareas);
 
                 propiedades_elementos_pantalla(tareas[i],renglon,checkbox,tarea,creacion,finalizacion,eliminar);
-                if (finalizacion.innerText !== ""){
+                if (tareas[i].finalizacion !== null){
                     propiedades_elementos_checkbox_sinmarcar(checkbox,tarea,creacion,finalizacion);
                     tareas_marcadas += 1;
                 }
