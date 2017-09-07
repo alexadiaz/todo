@@ -111,7 +111,6 @@
         return fetch("http://localhost:3000/consultar")
 	    .then(response => response.json())
         .then(tareas => {
-            console.log("consultar tareas")
             return mostrar_tareas_pantalla(tareas);
         });
     }
@@ -164,7 +163,6 @@
                 fetch("http://localhost:3000/completar/" + tarea.innerText)
                 .then (respuesta => respuesta.json())
                 .then (mensaje =>{
-                    console.log("completar");
                     if(mensaje === "Tarea completada ok"){
                         return consultar_tareas_guardadas();
                     }
