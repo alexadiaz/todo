@@ -148,8 +148,7 @@
                 renglon.appendChild(finalizacion);
                 renglon.appendChild(eliminar);
             }
-            contador.innerText =0;
-            actualizar_contador(true,tareas.length);
+            actualizar_contador(tareas.length-tareas_marcadas);
             resolve (true);
         });
     }
@@ -161,9 +160,9 @@
 
     function asignar_eventos_checkbox(renglon,checkbox,tarea,creacion,finalizacion){
         checkbox.addEventListener("click",() => {
-                fetch("http://localhost:3000/completar/" + tarea.innerText)
-                .then (respuesta => respuesta.json())
-                .then (mensaje =>{
+            fetch("http://localhost:3000/completar/" + tarea.innerText)
+            .then (respuesta => respuesta.json())
+            .then (mensaje =>{
                 consultar_tareas_guardadas()
                 .then (() =>{
                     if (mensaje === "Tarea pendiente ok"){
@@ -185,9 +184,9 @@
                 }
             }).then (() =>{
                 if(tareas.length === 0){
-                barra_inferior.style.display="none";
-            }
-        });
+                    barra_inferior.style.display="none";
+                }
+            });
         });
     }
 
@@ -227,47 +226,25 @@
         boton_actual.classList.add("foco");
     }
 
-    function propiedades_elementos_checkbox_sinmarcar(accion,renglon,checkbox,tarea){
-        if(accion){
-            renglon.setAttribute("data-name","1");
-            checkbox.className = "js_alinear_items js_checkbox_marcado";
-            tarea.style.textDecoration = "line-through";
-            borrar_todo.style.display = "inline-block";
-            return;
-        }
-        marcar.setAttribute("data-estado","todos");
+    function propiedades_elementos_checkbox_sinmarcar(checkbox,tarea,creacion,finalizacion){
+        checkbox.className = "js_alinear_items js_checkbox_marcado";
+        tarea.style.textDecoration = "line-through";
+        creacion.style.textDecoration = "line-through";
+        finalizacion.style.textDecoration = "line-through";
+        borrar_todo.style.display = "inline-block";
     }
 
-    function propiedades_elementos_checkbox_marcados(accion,renglon,checkbox,tarea){
+    function propiedades_elementos_checkbox_marcados(accion,checkbox,tarea,creacion,finalizacion){
         if(accion){
-            renglon.setAttribute("data-name","0")
             checkbox.className = "js_alinear_items js_checkbox";
             tarea.style.textDecoration = "none";
-            marcar.setAttribute("data-estado","ninguno");
+            creacion.style.textDecoration = "none";
+            finalizacion.style.textDecoration = "none";
             return;
         }
-            borrar_todo.style.display = renglon;
+            borrar_todo.style.display = checkbox;
     }
    
-    function propiedades_elementos_contador(accion,elemento1,elemento2){
-        if(accion){
-            barra_inferior.style.display = elemento1;
-            marcar.setAttribute("data-estado",elemento2);
-            return;
-        }
-        marcar.setAttribute("data-estado",elemento1);
-    }
-
-    function renglones_line_through(){
-        let count =0;
-        for (let i of Array.from(lista.children)){
-            if (i.getAttribute("data-name") === "1") {
-                count += 1;
-            }
-        }
-        return count;
-    }
-
     function mostrar_ocultar (renglon,is_mostrar){
         let display = is_mostrar === true ? "inline-block" : "none";
         let eliminar = renglon.querySelector(".js_boton_eliminar")
