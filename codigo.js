@@ -132,12 +132,13 @@
                 let eliminar = crear_elemento("input");
                         
                 asignar_eventos_renglon(renglon);
-                asignar_eventos_checkbox(renglon,checkbox,tarea);
-                asignar_eventos_eliminar(eliminar,tarea);
+                asignar_eventos_checkbox(renglon,checkbox,tarea,creacion,finalizacion);
+                asignar_eventos_eliminar(eliminar,tarea,tareas);
 
                 propiedades_elementos_pantalla(tareas[i],renglon,checkbox,tarea,creacion,finalizacion,eliminar);
                 if (finalizacion.innerText !== ""){
-                    propiedades_elementos_checkbox_sinmarcar(true,renglon,checkbox,tarea);
+                    propiedades_elementos_checkbox_sinmarcar(checkbox,tarea,creacion,finalizacion);
+                    tareas_marcadas += 1;
                 }
                 
                 lista.appendChild(renglon);
@@ -158,51 +159,35 @@
         renglon.addEventListener("mouseleave", () => mostrar_ocultar(renglon,false));
     }
 
-    function asignar_eventos_checkbox(renglon,checkbox,tarea){
+    function asignar_eventos_checkbox(renglon,checkbox,tarea,creacion,finalizacion){
         checkbox.addEventListener("click",() => {
-            let renglones_marcados = null;
-            let debeMarcar = null;
-            if (tarea.style.textDecoration !== "line-through"){
                 fetch("http://localhost:3000/completar/" + tarea.innerText)
                 .then (respuesta => respuesta.json())
                 .then (mensaje =>{
-                    if(mensaje === "Tarea completada ok"){
-                        return consultar_tareas_guardadas();
-                    }
-                }).then (() =>{
-                    renglones_marcados = renglones_line_through();
-                    if (renglones_marcados === lista.children.length){
-                        propiedades_elementos_checkbox_sinmarcar(false);
-                        debeMarcar=false;
+                consultar_tareas_guardadas()
+                .then (() =>{
+                    if (mensaje === "Tarea pendiente ok"){
+                        propiedades_elementos_checkbox_marcados(true,checkbox,tarea,creacion,finalizacion);
+                        tareas_marcadas !== 0 ?  propiedades_elementos_checkbox_marcados(false,"inline-block") :  propiedades_elementos_checkbox_marcados(false,"none");
                     }
                 });
-            }
-            else{
-                propiedades_elementos_checkbox_marcados(true,renglon,checkbox,tarea);
-                debeMarcar=true;
-                renglones_marcados = renglones_line_through();
-                renglones_marcados !== 0 ?  propiedades_elementos_checkbox_marcados(false,"inline-block") :  propiedades_elementos_checkbox_marcados(false,"none");
-                actualizar_contador(true,1);
-            }
+            });
         });
     }
 
-    function asignar_eventos_eliminar(eliminar,tarea){
+    function asignar_eventos_eliminar(eliminar,tarea,tareas){
         eliminar.addEventListener("click",function(){
-            if (tarea.style.textDecoration !== "line-through"){
-                actualizar_contador(false,1);
-            }
             fetch("http://localhost:3000/borrar/" + tarea.innerText)
             .then (respuesta => respuesta.json())
             .then (mensaje =>{
                 if(mensaje === "Tarea borrada ok"){
-                    consultar_tareas_guardadas();
+                    return consultar_tareas_guardadas();
                 }
-            });
-            if(lista.children.length === 0){
+            }).then (() =>{
+                if(tareas.length === 0){
                 barra_inferior.style.display="none";
-                marcar.setAttribute("data-estado", "ninguno");
             }
+        });
         });
     }
 
