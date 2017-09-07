@@ -9,6 +9,7 @@
     let completed = null;
     let active = null; 
     let borrar_todo = null;
+    let tareas_marcadas = null;
     
     function init() {
         marcar = id_elemento("marcar");
@@ -116,6 +117,8 @@
     }
 
     function mostrar_tareas_pantalla(tareas){
+        tareas_marcadas = 0;
+        contador.innerText = 0;
         return new Promise (resolve =>{
             while (lista.firstChild !== null){
                 lista.removeChild(lista.firstChild);
