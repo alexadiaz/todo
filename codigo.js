@@ -289,21 +289,9 @@
         eliminar.style.display = display;
     }
 
-    function actualizar_contador (operador,numero_tareas){
-        let numero = parseInt(contador.innerText);
-        if (operador){
-            contador.innerText = numero_tareas - renglones_line_through();
-            propiedades_elementos_contador(true,"block","ninguno");
-        }
-        else{
-            contador.innerText = numero - numero_tareas;
-            if (lista.children.length === 0){
-                propiedades_elementos_contador(true,"none","ninguno");
-            }
-            if (contador.innerText === "0"){
-                propiedades_elementos_contador(false,"todos");
-            }
-        }
+    function actualizar_contador (numero_tareas){
+        contador.innerText = numero_tareas;
+        barra_inferior.style.display = "block";
     }
 
     function insertar_tarea(input_texto){
