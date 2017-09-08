@@ -1,4 +1,3 @@
-
 (function(){
     "use strict";
     let marcar = null;
@@ -8,7 +7,7 @@
     let all = null;
     let completed = null;
     let active = null; 
-    let borrar_todo = null;
+    let borrar_completados = null;
     let tareas_marcadas = null;
     let debeMarcar = null;
     
@@ -20,14 +19,14 @@
         all = id_elemento("all");
         completed = id_elemento("completed"); 
         active = id_elemento("active");
-        borrar_todo = id_elemento("borrar-todo");
+        borrar_completados = id_elemento("borrar-completados");
         
+        mostrar_tareas_pantalla();
         asignar_eventos_marcar();
         asignar_eventos_all();
         asignar_eventos_completed();
         asignar_eventos_active();
-        asignar_eventos_borrar_todo();
-        consultar_tareas_guardadas();
+        asignar_eventos_borrar_completados();
         
         texto.onkeypress = function(oKeyEvent){
             if(oKeyEvent.charCode === 13){
@@ -206,7 +205,7 @@
         tarea.style.textDecoration = "line-through";
         creacion.style.textDecoration = "line-through";
         finalizacion.style.textDecoration = "line-through";
-        borrar_todo.style.display = "inline-block";
+        borrar_completados.style.display = "inline-block";
     }
 
     function propiedades_elementos_checkbox_marcados(checkbox,tarea,creacion,finalizacion){
@@ -239,5 +238,4 @@
     }
 
     document.addEventListener("DOMContentLoaded", init);
-
 }());
