@@ -127,14 +127,17 @@
                 let finalizacion = crear_elemento ("div");
                 let eliminar = crear_elemento("input");
                         
-                asignar_eventos_renglon(renglon);
-                asignar_eventos_checkbox(renglon,checkbox,tarea,creacion,finalizacion);
-                asignar_eventos_eliminar(eliminar,tarea,tareas);
+                asignar_eventos_renglon(renglon,eliminar);
+                asignar_eventos_checkbox(checkbox,tarea);
+                asignar_eventos_eliminar(eliminar,tarea);
 
                 propiedades_elementos_pantalla(tareas[i],renglon,checkbox,tarea,creacion,finalizacion,eliminar);
-                if (tareas[i].finalizacion !== null){
+                if (tareas[i].estado === "terminado"){
                     propiedades_elementos_checkbox_sinmarcar(checkbox,tarea,creacion,finalizacion);
                     tareas_marcadas += 1;
+                }
+                else{
+                    propiedades_elementos_checkbox_marcados(checkbox,tarea,creacion,finalizacion);
                 }
                 
                 lista.appendChild(renglon);
