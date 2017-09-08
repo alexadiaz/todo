@@ -168,7 +168,7 @@
             fetch("http://localhost:3000/completar/" + tarea.innerText)
             .then (respuesta => respuesta.json())
             .then (mensaje =>{
-                consultar_tareas_guardadas();
+                mostrar_tareas_pantalla();
             });
         });
     }
@@ -179,7 +179,7 @@
             .then (respuesta => respuesta.json())
             .then (mensaje =>{
                 if(mensaje === "Tarea borrada ok"){
-                    consultar_tareas_guardadas();
+                    mostrar_tareas_pantalla();
                 }
             });
         });
@@ -230,7 +230,7 @@
             .then(respuesta => respuesta.json())
             .then(mensaje => {
                 if(mensaje === "Tarea ingresada ok"){
-                    consultar_tareas_guardadas();
+                    mostrar_tareas_pantalla();
                 }
             });
         }
