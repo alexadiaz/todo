@@ -223,6 +223,47 @@
         }
     }
 
+    function asignar_eventos_all(){
+        all.addEventListener("click", function() {
+            propiedades_elementos_foco(this);
+            mostrar_tareas_pantalla();
+        });
+    }
+
+    function asignar_eventos_completed(){
+        completed.addEventListener("click", function(){
+            propiedades_elementos_foco(this);
+            mostrar_tareas_pantalla("completed");
+        });
+    }
+
+    function asignar_eventos_active(){
+        active.addEventListener("click", function(){
+            propiedades_elementos_foco(this);
+            mostrar_tareas_pantalla("active");
+        });
+    }
+
+    function propiedades_elementos_foco(boton_actual){
+        all.classList.remove("foco");
+        completed.classList.remove("foco");
+        active.classList.remove("foco");
+        
+        boton_actual.classList.add("foco");
+    }
+
+    function asignar_eventos_borrar_completados(){
+        borrar_completados.addEventListener("click", () =>{
+            fetch("http://localhost:3000/borrar_completados")
+            .then(respuesta => respuesta.json())
+            .then(mensaje =>{
+                if (mensaje === "Tareas borradas ok"){
+                    mostrar_tareas_pantalla();
+                }
+            });
+        });
+    }
+
     function insertar_tarea(input_texto){
         let tareas = [{nombre: input_texto.value}];
         if (tareas[0].nombre !== ""){
