@@ -7,10 +7,12 @@
     let all = null;
     let completed = null;
     let active = null; 
+    let ayuda =null;
+    let pantalla_ayuda = null;
     let borrar_completados = null;
     let tareas_marcadas = null;
     let debeMarcar = null;
-    
+        
     function init() {
         marcar = id_elemento("marcar");
         lista = id_elemento("lista");
@@ -19,13 +21,16 @@
         all = id_elemento("all");
         completed = id_elemento("completed"); 
         active = id_elemento("active");
+        ayuda = id_elemento("ayuda");
+        pantalla_ayuda = id_elemento("pantalla_ayuda");
         borrar_completados = id_elemento("borrar-completados");
-        
+                
         mostrar_tareas_pantalla();
         asignar_eventos_marcar();
         asignar_eventos_all();
         asignar_eventos_completed();
         asignar_eventos_active();
+        asignar_eventos_ayuda();
         asignar_eventos_borrar_completados();
         
         texto.onkeypress = function(oKeyEvent){
@@ -215,12 +220,57 @@
         all.classList.remove("foco");
         completed.classList.remove("foco");
         active.classList.remove("foco");
+        ayuda.classList.remove("foco");
+        borrar_completados.classList.remove("foco");
         
         boton_actual.classList.add("foco");
     }
 
+    function asignar_eventos_ayuda(){
+        ayuda.addEventListener("click", function(){
+            propiedades_elementos_foco(this); 
+            fetch("http://localhost:3000/ayuda")
+            .then(resultado => resultado.json())
+            .then(datos =>{
+                while (pantalla_ayuda.firstChild !== null){
+                    pantalla_ayuda.removeChild(pantalla_ayuda.firstChild);
+                }   
+                for(let i in datos){
+                    let informacion = crear_elemento("div");
+                    informacion.innerText = "- " + datos[i];
+                    pantalla_ayuda.appendChild(informacion);
+                }
+                let cerrar = crear_elemento("input");
+                cerrar.type = "button";
+                cerrar.value = "cerrar";
+                pantalla_ayuda.appendChild(cerrar);
+                asignar_eventos_cerrar_ayuda(cerrar);
+                
+                pantalla_ayuda.className = "ayuda";
+            });
+        });
+    }
+
+    function asignar_eventos_cerrar_ayuda(cerrar){
+        cerrar.addEventListener("click", () =>{
+            while (pantalla_ayuda.firstChild !== null){
+                pantalla_ayuda.removeChild(pantalla_ayuda.firstChild);
+            }   
+            pantalla_ayuda.classList.remove("ayuda");
+        });
+    }
+
+    function consultar_tarea_palabra(){
+
+    }
+
+    function renombrar_tarea(){
+
+    }
+
     function asignar_eventos_borrar_completados(){
-        borrar_completados.addEventListener("click", () =>{
+        borrar_completados.addEventListener("click", function(){
+            propiedades_elementos_foco(this);
             fetch("http://localhost:3000/borrar_completados")
             .then(respuesta => respuesta.json())
             .then(mensaje =>{

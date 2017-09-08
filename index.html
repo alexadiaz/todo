@@ -1,32 +1,31 @@
 <html>
-
-<head>
-    <title>My Todo
-    </title>
-    <link rel="stylesheet" href="clases.css">
-    <script src="codigo.js"></script>
-</head>
-
-<body>
-    <h1 class="color_titulo">My Todo</h1>
-    <div class="container">
-        <div class="linea_renglon">
-            <input id="marcar" class = "botones boton_marcar" type="button" value=">" data-estado="ninguno">
-            <input id="texto" class="botones ingresar_datos" type="text" placeholder="ingrese datos" autofocus>
+    <head>
+        <title>My Todo
+        </title>
+        <link rel="stylesheet" href="clases.css">
+        <script src="codigo.js"></script>
+    </head>
+    <body>
+        <h1 class="color_titulo">My Todo</h1>
+        <div class="container">
+            <div class="linea_renglon">
+                <input id="marcar" class = "botones boton_marcar" type="button" value=">" data-estado="ninguno">
+                <input id="texto" class="botones ingresar_datos" type="text" placeholder="ingrese datos" autofocus>
+            </div>
+            <div>
+                <ul id="lista"></ul>
+            </div>
+            <div id="barra_inferior" class="barra_inferior">
+                <span id="contador" class="texto_barra_inferior"></span>
+                <span class="texto_barra_inferior">tareas pendientes</span>
+                <input id="all" class="botones texto_barra_inferior margen_botones foco" type="button" value="All">
+                <input id="completed" class="botones texto_barra_inferior" type="button" value="Completed" >
+                <input id="active" class="botones texto_barra_inferior" type="button" value="Active" >
+                <input id="borrar-completados" class="botones texto_barra_inferior boton_borrar_todo" type="button" value="Clear completed">
+                <input id="ayuda" class="botones texto_barra_inferior" type="button" value="Ayuda" >
+            </div>
         </div>
-        <div>
-            <ul id="lista"></ul>
+        <div id="pantalla_ayuda"></div>
         </div>
-        <div id="barra_inferior" class="barra_inferior">
-            <span id="contador" class="texto_barra_inferior"></span>
-            <span class="texto_barra_inferior">tareas pendientes</span>
-            <input id="all" class="botones texto_barra_inferior margen_botones foco" type="button" value="All">
-            <input id="completed" class="botones texto_barra_inferior" type="button" value="Completed" >
-            <input id="active" class="botones texto_barra_inferior" type="button" value="Active" >
-            <input id="borrar-completados" class="botones texto_barra_inferior boton_borrar_todo" type="button" value="Clear completed">
-        </div>
-    </div>
-   
-</body>
-
+    </body>
 </html>
