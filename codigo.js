@@ -148,42 +148,39 @@
                 renglon.appendChild(eliminar);
             }
             actualizar_contador(tareas.length-tareas_marcadas);
+            tareas_marcadas === tareas.length ? debeMarcar = false : debeMarcar = true;
+            tareas_marcadas !== 0 ?  borrar_todo.style.display = "inline-block" : borrar_todo.style.display ="none";
             resolve (true);
         });
     }
 
-    function asignar_eventos_renglon(renglon){
-        renglon.addEventListener("mouseover", () => mostrar_ocultar(renglon,true));
-        renglon.addEventListener("mouseleave", () => mostrar_ocultar(renglon,false));
+    function asignar_eventos_renglon(renglon,eliminar){
+        renglon.addEventListener("mouseover", () => mostrar_ocultar(renglon,eliminar,true));
+        renglon.addEventListener("mouseleave", () => mostrar_ocultar(renglon,eliminar,false));
     }
 
-    function asignar_eventos_checkbox(renglon,checkbox,tarea,creacion,finalizacion){
+    function mostrar_ocultar (renglon,eliminar,is_mostrar){
+        let display = is_mostrar === true ? "inline-block" : "none";
+        eliminar.style.display = display;
+    }
+
+    function asignar_eventos_checkbox(checkbox,tarea){
         checkbox.addEventListener("click",() => {
             fetch("http://localhost:3000/completar/" + tarea.innerText)
             .then (respuesta => respuesta.json())
             .then (mensaje =>{
-                consultar_tareas_guardadas()
-                .then (() =>{
-                    if (mensaje === "Tarea pendiente ok"){
-                        propiedades_elementos_checkbox_marcados(true,checkbox,tarea,creacion,finalizacion);
-                        tareas_marcadas !== 0 ?  propiedades_elementos_checkbox_marcados(false,"inline-block") :  propiedades_elementos_checkbox_marcados(false,"none");
-                    }
-                });
+                consultar_tareas_guardadas();
             });
         });
     }
 
-    function asignar_eventos_eliminar(eliminar,tarea,tareas){
+    function asignar_eventos_eliminar(eliminar,tarea){
         eliminar.addEventListener("click",function(){
             fetch("http://localhost:3000/borrar/" + tarea.innerText)
             .then (respuesta => respuesta.json())
             .then (mensaje =>{
                 if(mensaje === "Tarea borrada ok"){
-                    return consultar_tareas_guardadas();
-                }
-            }).then (() =>{
-                if(tareas.length === 0){
-                    barra_inferior.style.display="none";
+                    consultar_tareas_guardadas();
                 }
             });
         });
@@ -191,7 +188,6 @@
 
     function propiedades_elementos_pantalla(tareas,renglon,checkbox,tarea,creacion,finalizacion,eliminar){
         renglon.className = "linea_renglon";
-        checkbox.className = "js_alinear_items js_checkbox";
         checkbox.type = "checkbox";
         tarea.className = "js_alinear_items js_margen_items";
         tarea.innerText = tareas.nombre;
@@ -213,26 +209,19 @@
         borrar_todo.style.display = "inline-block";
     }
 
-    function propiedades_elementos_checkbox_marcados(accion,checkbox,tarea,creacion,finalizacion){
-        if(accion){
+    function propiedades_elementos_checkbox_marcados(checkbox,tarea,creacion,finalizacion){
             checkbox.className = "js_alinear_items js_checkbox";
             tarea.style.textDecoration = "none";
             creacion.style.textDecoration = "none";
             finalizacion.style.textDecoration = "none";
-            return;
-        }
-            borrar_todo.style.display = checkbox;
-    }
-   
-    function mostrar_ocultar (renglon,is_mostrar){
-        let display = is_mostrar === true ? "inline-block" : "none";
-        let eliminar = renglon.querySelector(".js_boton_eliminar")
-        eliminar.style.display = display;
     }
 
     function actualizar_contador (numero_tareas){
         contador.innerText = numero_tareas;
         barra_inferior.style.display = "block";
+        if (numero_tareas === 0){
+            barra_inferior.style.display="none";
+        }
     }
 
     function insertar_tarea(input_texto){
