@@ -191,26 +191,6 @@
         eliminar.style.display = "none";
     }
 
-    function propiedades_elementos_marcar(accion){
-        if (accion){
-            marcar.setAttribute("data-estado", "todos");
-            borrar_todo.style.display="inline-block";
-            contador.innerText = "0"; 
-            return;
-        }
-        marcar.setAttribute("data-estado", "ninguno");
-        borrar_todo.style.display="none";
-        contador.innerText = lista.children.length;
-    }
-
-    function propiedades_elementos_foco(boton_actual){
-        all.classList.remove("foco");
-        completed.classList.remove("foco");
-        active.classList.remove("foco");
-        
-        boton_actual.classList.add("foco");
-    }
-
     function propiedades_elementos_checkbox_sinmarcar(checkbox,tarea,creacion,finalizacion){
         checkbox.className = "js_alinear_items js_checkbox_marcado";
         tarea.style.textDecoration = "line-through";
