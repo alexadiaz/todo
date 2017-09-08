@@ -69,12 +69,19 @@
                 asignar_eventos_eliminar(eliminar,tarea);
 
                 propiedades_elementos_pantalla(tareas[i],renglon,checkbox,tarea,creacion,finalizacion,eliminar);
+                               
                 if (tareas[i].estado === "terminado"){
                     propiedades_elementos_checkbox_sinmarcar(checkbox,tarea,creacion,finalizacion);
                     tareas_marcadas += 1;
+                    if (evento === "active"){
+                        renglon.style.display= "none";
+                    }
                 }
                 else{
                     propiedades_elementos_checkbox_marcados(checkbox,tarea,creacion,finalizacion);
+                    if (evento === "completed"){
+                        renglon.style.display= "none";
+                    }
                 }
                 
                 lista.appendChild(renglon);
@@ -169,10 +176,10 @@
     }
 
     function propiedades_elementos_checkbox_marcados(checkbox,tarea,creacion,finalizacion){
-            checkbox.className = "js_alinear_items js_checkbox";
-            tarea.style.textDecoration = "none";
-            creacion.style.textDecoration = "none";
-            finalizacion.style.textDecoration = "none";
+        checkbox.className = "js_alinear_items js_checkbox";
+        tarea.style.textDecoration = "none";
+        creacion.style.textDecoration = "none";
+        finalizacion.style.textDecoration = "none";
     }
 
     function actualizar_contador (numero_tareas){
