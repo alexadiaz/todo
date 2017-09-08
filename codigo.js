@@ -86,8 +86,30 @@
             }
             actualizar_contador(tareas.length-tareas_marcadas);
             tareas_marcadas === tareas.length ? debeMarcar = false : debeMarcar = true;
-            tareas_marcadas !== 0 ?  borrar_todo.style.display = "inline-block" : borrar_todo.style.display ="none";
-            resolve (true);
+            tareas_marcadas !== 0 ?  borrar_completados.style.display = "inline-block" : borrar_completados.style.display ="none";
+        });
+    }
+
+    function asignar_eventos_marcar(){
+        marcar.addEventListener("click", () =>{
+            if(debeMarcar){
+                fetch("http://localhost:3000/completar_todo")
+                .then(respuesta => respuesta.json())
+                .then(mensaje =>{
+                    if (mensaje === "Tareas completadas ok"){
+                        mostrar_tareas_pantalla();
+                    }
+                });
+            }
+            else{
+                fetch("http://localhost:3000/pendiente_todo")
+                .then(respuesta => respuesta.json())
+                .then(mensaje =>{
+                    if (mensaje === "Tareas pendientes ok"){
+                        mostrar_tareas_pantalla();
+                    }
+                });
+            }
         });
     }
 
