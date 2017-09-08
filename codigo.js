@@ -43,78 +43,16 @@
         return document.createElement(elemento);
     }
 
-    function asignar_eventos_marcar(){
-        marcar.addEventListener("click", () =>{
-            if(debeMarcar){
-            fetch("http://localhost:3000/completar_todo")
-            .then(respuesta => respuesta.json())
-            .then(mensaje =>{
-                if (mensaje === "Tareas completadas ok"){
-                    consultar_tareas_guardadas();
-                }
-            });
-            }
-            else{
-                fetch("http://localhost:3000/pendiente_todo")
-                .then(respuesta => respuesta.json())
-                .then(mensaje =>{
-                    if (mensaje === "Tareas pendientes ok"){
-                        consultar_tareas_guardadas();
-                    }
-                });
-            }
-        });
-    }
-
-    function asignar_eventos_all(){
-        all.addEventListener("click", function() {
-            propiedades_elementos_foco(this);
-            for (let i of Array.from(lista.children)){
-                i.style.display= "list-item"
-            }
-        });
-    }
-
-    function asignar_eventos_completed(){
-        completed.addEventListener("click", function(){
-            propiedades_elementos_foco(this);
-            for (let i of Array.from(lista.children)){
-                i.getAttribute("data-name") !== "1" ? i.style.display="none" : i.style.display="list-item";
-            }
-        });
-    }
-
-    function asignar_eventos_active(){
-        active.addEventListener("click", function(){
-            propiedades_elementos_foco(this);
-            for (let i of Array.from(lista.children)){
-                i.getAttribute("data-name") === "1" ? i.style.display="none" : i.style.display="list-item";
-            }
-        });
-    }
-
-    function asignar_eventos_borrar_todo(){
-        borrar_todo.addEventListener("click", () =>{
-            for (let i = lista.children.length - 1; i >= 0; i--){
-                if (lista.children[i].getAttribute("data-name") === "1"){
-                    lista.removeChild(lista.children[i]);
-                }
-            }
-        });
-    }
-
     function consultar_tareas_guardadas(){
         return fetch("http://localhost:3000/consultar")
 	    .then(response => response.json())
-        .then(tareas => {
-            return mostrar_tareas_pantalla(tareas);
-        });
     }
 
-    function mostrar_tareas_pantalla(tareas){
+    function mostrar_tareas_pantalla(evento){
         tareas_marcadas = 0;
         contador.innerText = 0;
-        return new Promise (resolve =>{
+        consultar_tareas_guardadas()
+        .then(tareas => {
             while (lista.firstChild !== null){
                 lista.removeChild(lista.firstChild);
             }
