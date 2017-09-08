@@ -10,7 +10,7 @@
     let active = null; 
     let borrar_todo = null;
     let tareas_marcadas = null;
-    let debeMarcar = true;
+    let debeMarcar = null;
     
     function init() {
         marcar = id_elemento("marcar");
@@ -46,6 +46,7 @@
 
     function asignar_eventos_marcar(){
         marcar.addEventListener("click", () =>{
+            if(debeMarcar){
             fetch("http://localhost:3000/completar_todo")
             .then(respuesta => respuesta.json())
             .then(mensaje =>{
@@ -53,6 +54,16 @@
                     consultar_tareas_guardadas();
                 }
             });
+            }
+            else{
+                fetch("http://localhost:3000/pendiente_todo")
+                .then(respuesta => respuesta.json())
+                .then(mensaje =>{
+                    if (mensaje === "Tareas pendientes ok"){
+                        consultar_tareas_guardadas();
+                    }
+                });
+            }
         });
     }
 
