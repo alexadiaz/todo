@@ -132,6 +132,19 @@ li {
     padding-left: 20px;
 }
 
+.js_boton_renombrar{
+    font-size: 18px;
+    position: absolute;
+    padding-top: 6px;
+    right: 10%;
+    color: red;
+}
+
+.js_boton_renombrar:hover{
+    border: 1px solid transparent;
+    color: blue;
+} 
+
 .js_boton_eliminar{
     font-size: 24px;
     position: absolute;
@@ -140,8 +153,8 @@ li {
 }
 
 .js_boton_eliminar:hover{
+    border: 1px solid transparent;
     color: blue;
-    border:0;
 }    
 
 .js_alinear_items{
