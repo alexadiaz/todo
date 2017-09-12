@@ -146,7 +146,7 @@
     }
 
     function asignar_eventos_eliminar(eliminar,tarea){
-        eliminar.addEventListener("click",function(){
+        eliminar.addEventListener("click",() =>{
             fetch("http://localhost:3000/borrar/" + tarea.innerText)
             .then (respuesta => respuesta.json())
             .then (mensaje =>{
