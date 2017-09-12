@@ -104,8 +104,9 @@
 
     function asignar_eventos_marcar(){
         marcar.addEventListener("click", () =>{
+            let metodo ={method:"POST"};
             if(debeMarcar){
-                fetch("http://localhost:3000/completar_todo")
+                fetch("http://localhost:3000/completar_todo", metodo)
                 .then(respuesta => respuesta.json())
                 .then(mensaje =>{
                     if (mensaje === "Tareas completadas ok"){
@@ -114,7 +115,7 @@
                 });
             }
             else{
-                fetch("http://localhost:3000/pendiente_todo")
+                fetch("http://localhost:3000/pendiente_todo", metodo)
                 .then(respuesta => respuesta.json())
                 .then(mensaje =>{
                     if (mensaje === "Tareas pendientes ok"){
@@ -137,14 +138,7 @@
 
     function asignar_eventos_checkbox(checkbox,tarea){
         checkbox.addEventListener("click",() => {
-            let myHeaders = new Headers();
-            myHeaders.append("Content-Type","application/json");
-            
-            let objeto = {tarea:tarea.innerText};
-            let cadena_objeto = JSON.stringify(objeto);
-            let contenido = {method:"post",
-                            headers:myHeaders,
-                            body:cadena_objeto};
+            let contenido = crear_contenido_post(tarea.innerText);
             fetch("http://localhost:3000/completar", contenido)
             .then (respuesta => respuesta.json())
             .then (mensaje =>{
@@ -155,7 +149,8 @@
 
     function asignar_eventos_eliminar(eliminar,tarea){
         eliminar.addEventListener("click",() =>{
-            fetch("http://localhost:3000/borrar/" + tarea.innerText)
+            let contenido = crear_contenido_post(tarea.innerText);
+            fetch("http://localhost:3000/borrar/", contenido)
             .then (respuesta => respuesta.json())
             .then (mensaje =>{
                 if(mensaje === "Tarea borrada ok"){
@@ -279,7 +274,8 @@
     function asignar_eventos_borrar_completados(){
         borrar_completados.addEventListener("click", function(){
             propiedades_elementos_foco(this);
-            fetch("http://localhost:3000/borrar_completados")
+            let metodo ={method:"POST"};
+            fetch("http://localhost:3000/borrar_completados", metodo)
             .then(respuesta => respuesta.json())
             .then(mensaje =>{
                 if (mensaje === "Tareas borradas ok"){
@@ -290,9 +286,9 @@
     }
 
     function insertar_tarea(input_texto){
-        let tareas = [{nombre: input_texto.value}];
-        if (tareas[0].nombre !== ""){
-            fetch("http://localhost:3000/insertar/" + tareas[0].nombre)
+        if (input_texto.value !== ""){
+            let contenido = crear_contenido_post(input_texto.value);
+            fetch("http://localhost:3000/insertar", contenido)
             .then(respuesta => respuesta.json())
             .then(mensaje => {
                 if(mensaje === "Tarea ingresada ok"){
