@@ -286,14 +286,26 @@
     }
 
     function insertar_tarea(input_texto){
-        if (input_texto.value !== ""){
-            let contenido = crear_contenido_post(input_texto.value);
-            fetch("http://localhost:3000/insertar", contenido)
+        let tarea = input_texto.value;
+        if (tarea !== ""){
+            fetch("http://localhost:3000/consultar_tarea?tarea=" + tarea)
+            .then(resultado => resultado.json())
+            .then(tareas =>{
+                if (tareas === "No se encontraron coincidencias"){
+                    let contenido = crear_contenido_post(tarea);
+                    return fetch("http://localhost:3000/insertar", contenido)
             .then(respuesta => respuesta.json())
-            .then(mensaje => {
-                if(mensaje === "Tarea ingresada ok"){
-                    mostrar_tareas_pantalla();
+                    .then(mensaje => "Tarea ingresada ok");
                 }
+                else{
+                    let sombrear =[];
+                    for(let i in tareas){
+                        sombrear.push(tareas[i].idtareas);
+                    }
+                    return sombrear;
+                }
+            }).then(resultado =>{
+                resultado === "Tarea ingresada ok" ? mostrar_tareas_pantalla():mostrar_tareas_pantalla("sombrear",resultado);
             });
         }
         input_texto.value = "";
