@@ -294,7 +294,7 @@
                 pantalla_ayuda.appendChild(cerrar);
                 asignar_eventos_cerrar_ayuda(cerrar);
                 
-                pantalla_ayuda.className = "ayuda";
+                pantalla_ayuda.className = "js_pantalla_ayuda";
             });
         });
     }
@@ -304,7 +304,7 @@
             while (pantalla_ayuda.firstChild !== null){
                 pantalla_ayuda.removeChild(pantalla_ayuda.firstChild);
             }   
-            pantalla_ayuda.classList.remove("ayuda");
+            pantalla_ayuda.classList.remove("js_pantalla_ayuda");
         });
     }
 
