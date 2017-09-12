@@ -71,10 +71,15 @@ li {
     padding: 16px 16px 16px 10px;
     font-style: italic;
     width: 89%;
+    cursor: text;
 }
 
-.boton_marcar:hover,
 .ingresar_datos:hover{
+    border: 1px solid transparent;
+    cursor: text;
+}
+
+.boton_marcar:hover{
     border: 1px solid transparent;
 }
 
