@@ -53,7 +53,7 @@
 	    .then(response => response.json())
     }
 
-    function mostrar_tareas_pantalla(evento){
+    function mostrar_tareas_pantalla(evento,array){
         tareas_marcadas = 0;
         contador.innerText = 0;
         consultar_tareas_guardadas()
@@ -86,6 +86,14 @@
                     propiedades_elementos_checkbox_marcados(checkbox,tarea,creacion,finalizacion);
                     if (evento === "completed"){
                         renglon.style.display= "none";
+                    }
+                }
+
+                if (evento === "sombrear"){
+                    for (let id of array){
+                        if(id === tareas[i].idtareas){
+                            renglon.style.background = "red";
+                        }
                     }
                 }
                 
@@ -290,7 +298,7 @@
                 if (tareas === "No se encontraron coincidencias"){
                     let contenido = crear_contenido_post(tarea);
                     return fetch("http://localhost:3000/insertar", contenido)
-            .then(respuesta => respuesta.json())
+                    .then(respuesta => respuesta.json())
                     .then(mensaje => "Tarea ingresada ok");
                 }
                 else{
