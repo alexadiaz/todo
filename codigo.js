@@ -12,7 +12,7 @@
     let borrar_completados = null;
     let tareas_marcadas = null;
     let debeMarcar = null;
-        
+           
     function init() {
         marcar = id_elemento("marcar");
         lista = id_elemento("lista");
@@ -137,7 +137,15 @@
 
     function asignar_eventos_checkbox(checkbox,tarea){
         checkbox.addEventListener("click",() => {
-            fetch("http://localhost:3000/completar/" + tarea.innerText)
+            let myHeaders = new Headers();
+            myHeaders.append("Content-Type","application/json");
+            
+            let objeto = {tarea:tarea.innerText};
+            let cadena_objeto = JSON.stringify(objeto);
+            let contenido = {method:"post",
+                            headers:myHeaders,
+                            body:cadena_objeto};
+            fetch("http://localhost:3000/completar", contenido)
             .then (respuesta => respuesta.json())
             .then (mensaje =>{
                 mostrar_tareas_pantalla();
