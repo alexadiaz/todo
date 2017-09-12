@@ -303,5 +303,15 @@
         input_texto.value = "";
     }
 
+    function crear_contenido_post(nombre_tarea){
+        let myHeaders = new Headers();
+        myHeaders.append("Content-Type","application/json");
+        let tarea_string = JSON.stringify({tarea:nombre_tarea});
+        let contenido ={method:"POST",
+                        headers:myHeaders,
+                        body:tarea_string};
+        return contenido;
+    }
+
     document.addEventListener("DOMContentLoaded", init);
 }());
