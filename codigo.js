@@ -263,10 +263,6 @@
         });
     }
 
-    function consultar_tarea_palabra(){
-
-    }
-
     function renombrar_tarea(){
 
     }
