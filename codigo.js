@@ -1,5 +1,6 @@
 (function(){
     "use strict";
+    let texto = null;
     let marcar = null;
     let lista = null;
     let barra_inferior = null;
@@ -12,8 +13,11 @@
     let borrar_completados = null;
     let tareas_marcadas = null;
     let debeMarcar = null;
+    let debeRenombrar = null;
+    let tarea_vieja = null;
            
     function init() {
+        texto = id_elemento("texto");
         marcar = id_elemento("marcar");
         lista = id_elemento("lista");
         barra_inferior = id_elemento("barra_inferior");
@@ -33,9 +37,9 @@
         asignar_eventos_ayuda();
         asignar_eventos_borrar_completados();
         
-        texto.onkeypress = function(oKeyEvent){
+        texto.onkeypress = function (oKeyEvent){
             if(oKeyEvent.charCode === 13){
-                insertar_tarea(this);
+                debeRenombrar ? renombrar_tarea() : insertar_tarea();
             }
         };
     }
@@ -54,8 +58,11 @@
     }
 
     function mostrar_tareas_pantalla(evento,array){
+        texto.value = "";
         tareas_marcadas = 0;
         contador.innerText = 0;
+        tarea_vieja = null;
+        debeRenombrar = false;
         consultar_tareas_guardadas()
         .then(tareas => {
             while (lista.firstChild !== null){
@@ -67,16 +74,18 @@
                 let tarea = crear_elemento("div");
                 let creacion = crear_elemento ("div");
                 let finalizacion = crear_elemento ("div");
+                let renombrar = crear_elemento("input");
                 let eliminar = crear_elemento("input");
                         
-                asignar_eventos_renglon(renglon,eliminar);
+                asignar_eventos_renglon(renglon,renombrar,eliminar);
                 asignar_eventos_checkbox(checkbox,tarea);
+                asignar_eventos_renombrar(renombrar,renglon,tarea);
                 asignar_eventos_eliminar(eliminar,tarea);
 
-                propiedades_elementos_pantalla(tareas[i],renglon,checkbox,tarea,creacion,finalizacion,eliminar);
+                propiedades_elementos_pantalla(tareas[i],renglon,checkbox,tarea,creacion,finalizacion,renombrar,eliminar);
                                
                 if (tareas[i].estado === "terminado"){
-                    propiedades_elementos_checkbox_sinmarcar(checkbox,tarea,creacion,finalizacion);
+                    propiedades_elementos_checkbox_sinmarcar(checkbox,tarea,creacion,finalizacion,renombrar);
                     tareas_marcadas += 1;
                     if (evento === "active"){
                         renglon.style.display= "none";
@@ -102,6 +111,7 @@
                 renglon.appendChild(tarea);
                 renglon.appendChild(creacion);
                 renglon.appendChild(finalizacion);
+                renglon.appendChild(renombrar);
                 renglon.appendChild(eliminar);
             }
             actualizar_contador(tareas.length-tareas_marcadas);
@@ -134,13 +144,14 @@
         });
     }
 
-    function asignar_eventos_renglon(renglon,eliminar){
-        renglon.addEventListener("mouseover", () => mostrar_ocultar(renglon,eliminar,true));
-        renglon.addEventListener("mouseleave", () => mostrar_ocultar(renglon,eliminar,false));
+    function asignar_eventos_renglon(renglon,renombrar,eliminar){
+        renglon.addEventListener("mouseover", () => mostrar_ocultar(renglon,renombrar,eliminar,true));
+        renglon.addEventListener("mouseleave", () => mostrar_ocultar(renglon,renombrar,eliminar,false));
     }
 
-    function mostrar_ocultar (renglon,eliminar,is_mostrar){
+    function mostrar_ocultar (renglon,renombrar,eliminar,is_mostrar){
         let display = is_mostrar === true ? "inline-block" : "none";
+        renombrar.style.display = display;
         eliminar.style.display = display;
     }
 
@@ -152,6 +163,26 @@
             .then (mensaje =>{
                 mostrar_tareas_pantalla();
             });
+        });
+    }
+
+    function asignar_eventos_renombrar(renombrar,renglon,tarea){
+        renombrar.addEventListener("click", () =>{
+            if(tarea_vieja === null && renombrar.value === "renombrar"){
+                renglon.style.background = "yellow";
+                texto.value = tarea.innerText;
+                texto.focus();
+                tarea_vieja = tarea.innerText;
+                renombrar.value = "cancelar";
+                debeRenombrar = true;
+            }
+            else if(tarea_vieja !== null &  renombrar.value === "cancelar"){
+                renglon.style.background = "transparent";
+                texto.value ="";
+                tarea_vieja = null;
+                renombrar.value = "renombrar";
+                debeRenombrar = false;
+            }
         });
     }
 
@@ -168,7 +199,7 @@
         });
     }
 
-    function propiedades_elementos_pantalla(tareas,renglon,checkbox,tarea,creacion,finalizacion,eliminar){
+    function propiedades_elementos_pantalla(tareas,renglon,checkbox,tarea,creacion,finalizacion,renombrar,eliminar){
         renglon.className = "linea_renglon";
         checkbox.type = "checkbox";
         tarea.className = "js_alinear_items js_margen_items";
@@ -177,18 +208,24 @@
         creacion.innerText = tareas.creacion;
         finalizacion.className = "js_alinear_items js_margen_items";
         finalizacion.innerText = tareas.finalizacion;
+        renombrar.className = "botones js_boton_renombrar";
+        renombrar.type = "button";
+        renombrar.value = "renombrar"
+        renombrar.style.display = "none";
         eliminar.className = "botones js_boton_eliminar";
         eliminar.type = "button";
         eliminar.value = "x";
         eliminar.style.display = "none";
     }
 
-    function propiedades_elementos_checkbox_sinmarcar(checkbox,tarea,creacion,finalizacion){
+    function propiedades_elementos_checkbox_sinmarcar(checkbox,tarea,creacion,finalizacion,renombrar){
         checkbox.className = "js_alinear_items js_checkbox_marcado";
         tarea.style.textDecoration = "line-through";
         creacion.style.textDecoration = "line-through";
         finalizacion.style.textDecoration = "line-through";
         borrar_completados.style.display = "inline-block";
+        renombrar.disabled = true;
+        renombrar.style.color ="gray";
     }
 
     function propiedades_elementos_checkbox_marcados(checkbox,tarea,creacion,finalizacion){
@@ -271,10 +308,6 @@
         });
     }
 
-    function renombrar_tarea(){
-
-    }
-
     function asignar_eventos_borrar_completados(){
         borrar_completados.addEventListener("click", function(){
             propiedades_elementos_foco(this);
@@ -289,8 +322,8 @@
         });
     }
 
-    function insertar_tarea(input_texto){
-        let tarea = input_texto.value;
+    function insertar_tarea(){
+        let tarea = texto.value;
         if (tarea !== ""){
             fetch("http://localhost:3000/consultar_tarea?tarea=" + tarea)
             .then(resultado => resultado.json())
@@ -312,13 +345,24 @@
                 resultado === "Tarea ingresada ok" ? mostrar_tareas_pantalla():mostrar_tareas_pantalla("sombrear",resultado);
             });
         }
-        input_texto.value = "";
     }
 
-    function crear_contenido_post(nombre_tarea){
+    function renombrar_tarea(){
+        let nueva = texto.value;
+        let contenido = crear_contenido_post(tarea_vieja,nueva);
+        fetch("http://localhost:3000/renombrar", contenido)
+        .then(respuesta => respuesta.json())
+        .then(mensaje => {
+            mensaje === "La tarea ya existe" ? texto.value = "" : mostrar_tareas_pantalla();
+        });
+    }
+
+    function crear_contenido_post(nombre_tarea,nueva_tarea){
+        let tarea_string = null;
         let myHeaders = new Headers();
         myHeaders.append("Content-Type","application/json");
-        let tarea_string = JSON.stringify({tarea:nombre_tarea});
+        nueva_tarea === undefined ? tarea_string = JSON.stringify({tarea:nombre_tarea}) : tarea_string = JSON.stringify({tarea:nombre_tarea,nueva:nueva_tarea});
+        
         let contenido ={method:"POST",
                         headers:myHeaders,
                         body:tarea_string};
