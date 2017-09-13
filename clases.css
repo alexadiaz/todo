@@ -87,6 +87,7 @@ li {
 .barra_inferior{
     display: none;
     padding: 5px 26px 5px 26px;
+    position: relative;
 }
 
 .texto_barra_inferior{
@@ -98,13 +99,22 @@ li {
 }
 
 .boton_borrar_todo{
-    margin-left: 15%;
+    position: absolute;
+    right: 15%;
+    bottom: 5px;
     display: none;
+    border:0;
 }
 
 .boton_borrar_todo:hover{
     text-decoration: underline;
     border:0;
+}
+
+.boton_ayuda{
+    position: absolute;
+    right: 5%;
+    bottom: 5px;
 }
 
 .js_pantalla_ayuda{
