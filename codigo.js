@@ -1,34 +1,39 @@
 (function(){
     "use strict";
-    let texto = null;
     let marcar = null;
+    let texto = null;
     let lista = null;
     let barra_inferior = null;
     let contador = null;
     let all = null;
     let completed = null;
     let active = null; 
-    let ayuda =null;
-    let pantalla_ayuda = null;
     let borrar_completados = null;
+    let ayuda = null;
+    let pantalla_ayuda = null;
+    let contenido_ayuda = null;
+    let cerrar_ayuda = null;
+   
     let tareas_marcadas = null;
+    let tarea_vieja = null;
     let debeMarcar = null;
     let debeRenombrar = null;
-    let tarea_vieja = null;
-           
+   
     function init() {
-        texto = id_elemento("texto");
         marcar = id_elemento("marcar");
+        texto = id_elemento("texto");
         lista = id_elemento("lista");
         barra_inferior = id_elemento("barra_inferior");
         contador = id_elemento("contador");
         all = id_elemento("all");
         completed = id_elemento("completed"); 
         active = id_elemento("active");
+        borrar_completados = id_elemento("borrar-completados");
         ayuda = id_elemento("ayuda");
         pantalla_ayuda = id_elemento("pantalla_ayuda");
-        borrar_completados = id_elemento("borrar-completados");
-                
+        contenido_ayuda = id_elemento("contenido_ayuda");
+        cerrar_ayuda = id_elemento("cerrar_ayuda");
+      
         mostrar_tareas_pantalla();
         asignar_eventos_marcar();
         asignar_eventos_all();
@@ -59,8 +64,8 @@
 
     function mostrar_tareas_pantalla(evento,array){
         texto.value = "";
-        tareas_marcadas = 0;
         contador.innerText = 0;
+        tareas_marcadas = 0;
         tarea_vieja = null;
         debeRenombrar = false;
         consultar_tareas_guardadas()
@@ -83,7 +88,6 @@
                 asignar_eventos_eliminar(eliminar,tarea);
 
                 propiedades_elementos_pantalla(tareas[i],renglon,checkbox,tarea,creacion,finalizacion,renombrar,eliminar);
-                               
                 if (tareas[i].estado === "terminado"){
                     propiedades_elementos_checkbox_sinmarcar(checkbox,tarea,creacion,finalizacion,renombrar);
                     tareas_marcadas += 1;
@@ -281,31 +285,25 @@
             fetch("http://localhost:3000/ayuda")
             .then(resultado => resultado.json())
             .then(datos =>{
-                while (pantalla_ayuda.firstChild !== null){
-                    pantalla_ayuda.removeChild(pantalla_ayuda.firstChild);
-                }   
+                while (contenido_ayuda.firstChild !== null){
+                    contenido_ayuda.removeChild(contenido_ayuda.firstChild);
+                }
                 for(let i in datos){
                     let informacion = crear_elemento("div");
                     informacion.innerText = "- " + datos[i];
-                    pantalla_ayuda.appendChild(informacion);
+                    contenido_ayuda.appendChild(informacion);
                 }
-                let cerrar = crear_elemento("input");
-                cerrar.type = "button";
-                cerrar.value = "cerrar";
-                pantalla_ayuda.appendChild(cerrar);
-                asignar_eventos_cerrar_ayuda(cerrar);
-                
-                pantalla_ayuda.className = "js_pantalla_ayuda";
+                pantalla_ayuda.classList.remove("pantalla_ayuda_ocultar");
+                pantalla_ayuda.classList.add ("js_pantalla_ayuda");
+                asignar_eventos_cerrar_ayuda();
             });
         });
     }
 
-    function asignar_eventos_cerrar_ayuda(cerrar){
-        cerrar.addEventListener("click", () =>{
-            while (pantalla_ayuda.firstChild !== null){
-                pantalla_ayuda.removeChild(pantalla_ayuda.firstChild);
-            }   
+    function asignar_eventos_cerrar_ayuda(){
+        cerrar_ayuda.addEventListener("click", () =>{
             pantalla_ayuda.classList.remove("js_pantalla_ayuda");
+            pantalla_ayuda.classList.add ("pantalla_ayuda_ocultar");
         });
     }
 

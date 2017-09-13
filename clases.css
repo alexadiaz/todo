@@ -117,14 +117,32 @@ li {
     bottom: 5px;
 }
 
+.pantalla_ayuda_ocultar{
+    display: none;
+}
+
+.titulo_ayuda{
+    text-align: center;
+    margin-top: 20px;
+    color:blue;
+}
+
+.contenido_ayuda{
+    margin: 3% 25%;
+}
+
+.cerrar_ayuda{
+    text-align: center;
+}
+
 .js_pantalla_ayuda{
     position: absolute;
     top: 0;
     bottom: 0;
     right: 0;
     left: 0;
-    border: 1px solid red;
-    background-color: white;
+    background-color: #f5f5f5;
+    display: inline-block;
 }  
 
 .js_checkbox{
