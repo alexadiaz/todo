@@ -114,7 +114,7 @@
                 renglon.appendChild(renombrar);
                 renglon.appendChild(eliminar);
             }
-            actualizar_contador(tareas.length-tareas_marcadas);
+            actualizar_contador(tareas.length);
             tareas_marcadas === tareas.length ? debeMarcar = false : debeMarcar = true;
             tareas_marcadas !== 0 ?  borrar_completados.style.display = "inline-block" : borrar_completados.style.display ="none";
         });
@@ -236,7 +236,7 @@
     }
 
     function actualizar_contador (numero_tareas){
-        contador.innerText = numero_tareas;
+        contador.innerText = numero_tareas - tareas_marcadas;
         barra_inferior.style.display = "block";
         if (numero_tareas === 0){
             barra_inferior.style.display="none";
