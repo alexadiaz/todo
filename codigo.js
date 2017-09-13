@@ -121,7 +121,18 @@
             actualizar_contador(tareas.length);
             tareas_marcadas === tareas.length ? debeMarcar = false : debeMarcar = true;
             tareas_marcadas !== 0 ?  borrar_completados.style.display = "inline-block" : borrar_completados.style.display ="none";
+            if(evento === "sombrear"){
+                setTimeout(desmarcar_consultados,3000);
+            }
         });
+    }
+
+    function desmarcar_consultados(){
+        for (let i in lista.childNodes){
+            if(lista.childNodes[i].style.background === "red"){
+                lista.childNodes[i].style.background = "transparent";
+            }
+        }
     }
 
     function asignar_eventos_marcar(){
