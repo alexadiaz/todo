@@ -236,7 +236,8 @@
     }
 
     function actualizar_contador (numero_tareas){
-        contador.innerText = numero_tareas - tareas_marcadas;
+        let pendientes = numero_tareas - tareas_marcadas;
+        pendientes === 1 ? contador.innerText = pendientes + " tarea pendiente" : contador.innerText = pendientes + " tareas pendientes";
         barra_inferior.style.display = "block";
         if (numero_tareas === 0){
             barra_inferior.style.display="none";
