@@ -220,9 +220,9 @@
         tarea.className = "js_alinear_items js_margen_items";
         tarea.innerText = tareas.nombre;
         creacion.className = "js_alinear_items js_margen_items";
-        creacion.innerText = tareas.creacion;
+        creacion.innerText = new Date(tareas.creacion).toLocaleString();
+        tareas.finalizacion === null ? finalizacion.innerText = tareas.finalizacion : finalizacion.innerText = new Date(tareas.finalizacion).toLocaleString();
         finalizacion.className = "js_alinear_items js_margen_items";
-        finalizacion.innerText = tareas.finalizacion;
         renombrar.className = "botones js_boton_renombrar";
         renombrar.type = "button";
         renombrar.value = "renombrar"
