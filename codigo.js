@@ -128,7 +128,7 @@
     }
 
     function desmarcar_consultados(){
-        for (let i in lista.childNodes){
+        for (let i in Array.from(lista.childNodes)){
             if(lista.childNodes[i].style.background === "red"){
                 lista.childNodes[i].style.background = "transparent";
             }
